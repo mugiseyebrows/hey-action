@@ -5,5 +5,8 @@ print(__file__)
 with open("list.txt", 'w', encoding='utf-8') as f:
     for root, dirs, files in os.walk("C:\\"):
         for name in files:
-            f.write(os.path.join(root,name) + "\n")
+            try:
+                f.write(os.path.join(root,name) + "\n")
+            except UnicodeEncodeError:
+                pass
 
