@@ -13,10 +13,11 @@ jobs:
         shell: cmd
       - run: echo cwd %~dp0
         shell: cmd
-      - run: C:\Miniconda\python.exe -c "import sys;print(sys.modules['site'])"
+      - run: C:/Miniconda/python.exe -c "import sys;print(sys.modules['site'])"
+        shell: cmd
       - uses: actions/upload-artifact@v3
         with:
           path: 
-          - C:\imagedata.json
-          - C:\InstalledSoftware.md
+          - C:/imagedata.json
+          - C:/InstalledSoftware.md
       
