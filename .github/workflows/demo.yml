@@ -6,5 +6,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: ./.github/actions/foo
-      - run: echo hello
-        shell: cmd
+      - name: Display the path
+        run: |
+          import os
+          print(os.environ['PATH'])
+        shell: python
+
