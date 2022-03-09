@@ -9,6 +9,12 @@ jobs:
       - uses: ./.github/actions/foo
       - run: python -c "import os;print(os.getcwd())"
         shell: cmd
+      - run: echo cwd %CD%
+        shell: cmd
+      - run: echo cwd %~dp0
+        shell: cmd
+      - run: dir .\list.py
+        shell: cmd
       - uses: actions/upload-artifact@v3
         with:
           path: list.txt
