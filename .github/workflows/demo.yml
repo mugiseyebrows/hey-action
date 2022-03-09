@@ -7,7 +7,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
       - uses: ./.github/actions/foo
-      - run: python -c "import sys;import os;print(os.getcwd());print(sys.modules['site'])""
+      - run: python -c "import sys;import os;print(os.getcwd());print(sys.modules['site'])"
         shell: cmd
       - run: echo cwd %CD%
         shell: cmd
