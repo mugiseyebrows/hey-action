@@ -5,11 +5,11 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: jurplel/install-qt-action@v2
         with:
           version: 5.15.2
           arch: win64_mingw81
       - run: |
-          echo %Qt5_DIR%
-          %Qt5_DIR%\bin\qmake
+          set PATH=C:\Miniconda;%PATH%
+          python -m pip install aqtinstall
+          python -m aqt install 5.15.2 windows desktop win64_mingw81 -O Qt
         shell: cmd
