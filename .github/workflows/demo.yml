@@ -13,7 +13,7 @@ jobs:
         shell: cmd
       - run: echo cwd %~dp0
         shell: cmd
-      - run: python .github/workflow/list.py
+      - run: python list.py
         shell: cmd
       - uses: actions/upload-artifact@v3
         with:
