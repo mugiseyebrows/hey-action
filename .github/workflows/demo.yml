@@ -19,11 +19,7 @@ jobs:
         shell: cmd
       - uses: actions/upload-artifact@v3
         with:
-          path: |
-            C:\imagedata.json
-            C:\InstalledSoftware.md
-            C:\image\toolset.json
-            list.txt
+          path: list.txt
 
 
         
