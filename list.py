@@ -71,7 +71,7 @@ def _walk(top, topdown, onerror, followlinks, maxdepth):
 
 with open("list.txt", 'w', encoding='utf-8') as f:
     for root, dirs, files in walk("C:\\", maxdepth=2):
-        for name in files:
+        for name in [dirs + files]:
             try:
                 f.write(os.path.join(root,name) + "\n")
             except UnicodeEncodeError:
