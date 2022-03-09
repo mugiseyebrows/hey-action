@@ -1,4 +1,4 @@
 runs:
   using: composite
   steps:
-  - run: echo hello
+  - run: echo hello from foo
