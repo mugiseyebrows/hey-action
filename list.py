@@ -73,7 +73,7 @@ with open("list.txt", 'w', encoding='utf-8') as f:
     for root, dirs, files in walk("C:\\", maxdepth=2):
         for name in dirs + files:
             try:
-                f.write(os.path.join(root,name) + "\n")
+                f.write(os.path.realpath(os.path.join(root,name)) + "\n")
             except UnicodeEncodeError:
                 pass
 
