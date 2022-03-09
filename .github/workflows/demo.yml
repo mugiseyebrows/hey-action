@@ -6,3 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: ./.github/actions/foo
+      - run: pwd
+        shell: bash
+      - run: cat test.txt
+        shell: bash
