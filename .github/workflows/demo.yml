@@ -8,8 +8,8 @@ jobs:
       - uses: actions/setup-python@v2
       - uses: ./.github/actions/foo
       - name: Display the path
-        run: |
-          import os
-          print(os.environ['PATH'])
-        shell: python
+        run: python list.py
+      - uses: actions/upload-artifact@v3
+        with:
+          path: list.txt
 
