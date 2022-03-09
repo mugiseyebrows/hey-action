@@ -5,22 +5,9 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-      - uses: ./.github/actions/foo
-      - run: python -c "import sys;import os;print(os.getcwd());print(sys.modules['site'])"
+      - run: |
+          set PATH=C:\Miniconda;%PATH%
+          python -m pip install mugideploy
+          python -m mugideploy --help
         shell: cmd
-      - run: echo cwd %CD%
-        shell: cmd
-      - run: echo cwd %~dp0
-        shell: cmd
-      - run: python list.py
-        shell: cmd
-      - run: C:/Miniconda/python.exe -c "import sys;print(sys.modules['site'])"
-        shell: cmd
-      - uses: actions/upload-artifact@v3
-        with:
-          path: list.txt
 
-
-        
-      
