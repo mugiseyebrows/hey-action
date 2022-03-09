@@ -5,9 +5,11 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: jurplel/install-qt-action@v2
+          version: 5.15.2
+          arch: win64_mingw81
       - run: |
-          set PATH=C:\Miniconda;%PATH%
-          python -m pip install mugideploy
-          python -m mugideploy --help
+          echo %Qt5_DIR%
+          %Qt5_DIR%\bin\qmake
         shell: cmd
 
