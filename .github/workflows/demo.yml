@@ -40,6 +40,7 @@ jobs:
           set PATH=C:\mingw64\bin;C:\Qt\5.15.2\mingw81_64\bin;%PATH%
           C:\Miniconda\python -m pip install mugideploy
           C:\Miniconda\python -m mugideploy collect --app app --version 1.0.0 --bin release\app.exe
+        shell: cmd
 
       - uses: actions/upload-artifact@v3
         with:
