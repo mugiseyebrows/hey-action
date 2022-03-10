@@ -6,46 +6,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/cache@v2
-        with:
-          path: |
-            C:\Miniconda\Lib\site-packages\aqt
-            C:\Miniconda\Lib\site-packages\aqtinstall-2.0.6.dist-info
-            C:\Miniconda\Lib\site-packages\bcj
-            C:\Miniconda\Lib\site-packages\beautifulsoup4-4.10.0.dist-info
-            C:\Miniconda\Lib\site-packages\Brotli-1.0.9.dist-info
-            C:\Miniconda\Lib\site-packages\bs4
-            C:\Miniconda\Lib\site-packages\bs4-0.0.1.dist-info
-            C:\Miniconda\Lib\site-packages\Cryptodome
-            C:\Miniconda\Lib\site-packages\multivolumefile
-            C:\Miniconda\Lib\site-packages\multivolumefile-0.2.3.dist-info
-            C:\Miniconda\Lib\site-packages\patch-1.16.dist-info
-            C:\Miniconda\Lib\site-packages\py7zr
-            C:\Miniconda\Lib\site-packages\py7zr-0.18.0.dist-info
-            C:\Miniconda\Lib\site-packages\pybcj-0.5.0.dist-info
-            C:\Miniconda\Lib\site-packages\pycryptodomex-3.14.1.dist-info
-            C:\Miniconda\Lib\site-packages\pyppmd
-            C:\Miniconda\Lib\site-packages\pyppmd-0.17.4.dist-info
-            C:\Miniconda\Lib\site-packages\pyzstd
-            C:\Miniconda\Lib\site-packages\pyzstd-0.15.2.dist-info
-            C:\Miniconda\Lib\site-packages\semantic_version
-            C:\Miniconda\Lib\site-packages\semantic_version-2.9.0.dist-info
-            C:\Miniconda\Lib\site-packages\soupsieve
-            C:\Miniconda\Lib\site-packages\soupsieve-2.3.1.dist-info
-            C:\Miniconda\Lib\site-packages\texttable-1.6.4.dist-info
-            C:\Miniconda\Lib\site-packages\zipfile_deflate64
-            C:\Miniconda\Lib\site-packages\zipfile_deflate64-0.2.0.dist-info
-            C:\Miniconda\Lib\site-packages\brotli.py
-            C:\Miniconda\Lib\site-packages\patch.py
-            C:\Miniconda\Lib\site-packages\texttable.py
-            C:\Miniconda\Lib\site-packages\_brotli.cp39-win_amd64.pyd
-            C:\Miniconda\Scripts\aqt.exe
-            C:\Miniconda\Scripts\py7zr.exe
-          key: aqt-cache-1
-      - uses: actions/cache@v2
         id: cache1
         with:
           path: C:\Qt\5.15.2\mingw81_64
           key: qt-5.15.2-win64_mingw81
-      - run: C:\Miniconda\python -m aqt install 5.15.2 windows desktop win64_mingw81 -O C:\Qt
+      - run: |
+          C:\Miniconda\python -m pip install aqtinstall
+          C:\Miniconda\python -m aqt install 5.15.2 windows desktop win64_mingw81 -O C:\Qt
         if: steps.cache1.outputs.cache-hit != 'true'
       - run: C:\Qt\5.15.2\mingw81_64\bin\qmake.exe --version
