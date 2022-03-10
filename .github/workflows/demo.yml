@@ -8,5 +8,13 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: '3.9'
-      - run: python -c "import os;print(os.getcwd())"
+      - run: |
+          pip install virtualenv
+          python -m venv env1
+          env1\Scripts\activate
+          pipenv install aqtinstall
+          pip freeze > requirements.txt
         shell: cmd
+      - uses: actions/upload-artifact@v3
+          with:
+            path: "**/requirements.txt"
