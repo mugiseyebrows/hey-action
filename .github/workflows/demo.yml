@@ -5,9 +5,15 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
-      - run: C:\Miniconda\python -m pip install aqtinstall mugicli
-      - run: C:\Miniconda\python -m mugicli.pyfind C:\Miniconda\Lib\site-packages C:\Miniconda\Scripts -maxdepth 1 -mmin -5 -not -iname __pycache__ > modified-packages2.txt
+      - run: C:\Miniconda\python -m pip install aqtinstall
+      - run: git clone https://github.com/mugiseyebrows/mugi-cli
+      - run:
+          echo $env.cd |
+          cd mugi-cli
+          python -m mugicli.pyfind C:\Miniconda\Lib\site-packages C:\Miniconda\Scripts -maxdepth 1 -mmin -5 -not -iname __pycache__ > ../modified-packages3.txt
+          echo $env.cd
+      - run: echo $env.cd
       - run: C:\Miniconda\python -m aqt --help
       - uses: actions/upload-artifact@v3
         with:
-          path: modified-packages2.txt
+          path: modified-packages3.txt
