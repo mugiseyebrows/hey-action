@@ -10,7 +10,7 @@ jobs:
           python-version: '3.9'
           cache: 'pip'
           cache-dependency-path: '**/requirements.txt'
-      - run: aqt --help
+      - run: python -m aqt --help
         shell: cmd
       - run: pip install aqtinstall
         shell: cmd
