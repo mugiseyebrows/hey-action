@@ -44,6 +44,3 @@ jobs:
 
       - run: C:\Miniconda\python -m aqt --help || C:\Miniconda\python -m pip install aqtinstall
       - run: C:\Miniconda\python -m aqt --help
-      - uses: actions/upload-artifact@v3
-        with:
-          path: modified-packages3.txt
