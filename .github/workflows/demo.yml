@@ -6,8 +6,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: C:\Miniconda\python -m pip install aqtinstall mugicli
-      - run: C:\Miniconda\python -m mugicli.pyfind C:\Miniconda\Lib\site-packages -maxdepth 1 -mmin -5 > modified-packages.txt
+      - run: C:\Miniconda\python -m mugicli.pyfind C:\Miniconda\Lib\site-packages C:\Miniconda\Scripts -maxdepth 1 -mmin -5 -not -iname __pycache__ > modified-packages2.txt
       - run: C:\Miniconda\python -m aqt --help
       - uses: actions/upload-artifact@v3
         with:
-          path: modified-packages.txt
+          path: modified-packages2.txt
