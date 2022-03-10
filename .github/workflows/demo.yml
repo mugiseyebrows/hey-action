@@ -16,5 +16,5 @@ jobs:
           pip freeze > requirements.txt
         shell: cmd
       - uses: actions/upload-artifact@v3
-          with:
-            path: "**/requirements.txt"
+        with:
+          path: "**/requirements.txt"
