@@ -14,10 +14,13 @@ jobs:
         shell: cmd
       - run: env1\Scripts\activate
         shell: cmd
-      - run: pipenv install aqtinstall
+      - run: pip install aqtinstall
         shell: cmd
       - run: pip freeze > requirements.txt
         shell: cmd
+      - run: python list.py -o list-pythonLocation.txt %pythonLocation%
       - uses: actions/upload-artifact@v3
         with:
-          path: "**/requirements.txt"
+          path: |
+            "**/requirements.txt"
+            list-pythonLocation.txt

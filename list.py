@@ -73,10 +73,12 @@ def _walk(top, topdown, onerror, followlinks, maxdepth):
 
 parser = argparse.ArgumentParser()
 parser.add_argument('path')
+parser.add_argument('-o', '--output')
+parser.add_argument('-d', type=int, default=0)
 args = parser.parse_args()
 
-with open("list.txt", 'w', encoding='utf-8') as f:
-    for root, dirs, files in walk(args.path, maxdepth=2):
+with open(args.output, 'w', encoding='utf-8') as f:
+    for root, dirs, files in walk(args.path, args.d):
         for name in dirs + files:
             try:
                 f.write(os.path.realpath(os.path.join(root,name)) + "\n")
