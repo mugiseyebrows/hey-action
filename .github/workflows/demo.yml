@@ -5,11 +5,11 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/cache@v2
+      - uses: actions/cache@v1
         id: cache1
         with:
           path: C:\Qt\5.15.2\mingw81_64
-          key: qt-5.15.2-win64_mingw81
+          key: qt-5.15.2-win64_mingw81-1
       - run: |
           C:\Miniconda\python -m pip install aqtinstall
           C:\Miniconda\python -m aqt install 5.15.2 windows desktop win64_mingw81 -O C:\Qt
