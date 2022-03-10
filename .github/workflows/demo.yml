@@ -8,8 +8,9 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: '3.9'
+      - run: pip install virtualenv
+        shell: cmd
       - run: |
-          pip install virtualenv
           python -m venv env1
           env1\Scripts\activate
           pipenv install aqtinstall
