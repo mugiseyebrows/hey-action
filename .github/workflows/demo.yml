@@ -42,7 +42,11 @@ jobs:
           C:\Miniconda\python -m mugideploy collect --app app --version 1.0.0 --bin release\app.exe
         shell: cmd
 
+      - run:
+          C:\Miniconda\python -m pip install mugicli
+          C:\Miniconda\python -m mugicli.pyfind C:\Qt\5.15.2 > qt-listing.txt
+
       - uses: actions/upload-artifact@v3
         with:
-          path: app*.zip
+          path: app*.zip qt-listing.txt
       
