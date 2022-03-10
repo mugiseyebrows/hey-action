@@ -42,7 +42,6 @@ jobs:
           key: aqtinstall-windows-cache
       - run: C:\Miniconda\python -m pip install aqtinstall mugicli
       - run: C:\Miniconda\python -m aqt --help
-      - run: Get-Content modified-packages.txt
       - uses: actions/upload-artifact@v3
         with:
           path: modified-packages.txt
