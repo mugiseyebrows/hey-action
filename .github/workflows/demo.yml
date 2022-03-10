@@ -22,29 +22,36 @@ jobs:
           C:\Miniconda\python -m pip install aqtinstall
           C:\Miniconda\python -m aqt install 5.15.2 windows desktop win64_mingw81 -O C:\Qt
         if: steps.cache_qt.outputs.cache-hit != 'true'
+        name: install qt
 
       - run: |
           curl -L -o x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/8.1.0/threads-posix/seh/x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z
           7z x -oC:\ x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z
         if: steps.cache_mingw.outputs.cache-hit != 'true'
+        name: install mingw
 
       - run: C:\Qt\5.15.2\mingw81_64\bin\qmake.exe --version
+        name: test qmake
       - run: C:\mingw64\bin\gcc -v
+        name: test gcc
       - run: |
           set PATH=C:\mingw64\bin;C:\Qt\5.15.2\mingw81_64\bin;%PATH%
           qmake
           mingw32-make
         shell: cmd
+        name: build app
       
       - run:
           set PATH=C:\mingw64\bin;C:\Qt\5.15.2\mingw81_64\bin;%PATH%
           C:\Miniconda\python -m pip install mugideploy
           C:\Miniconda\python -m mugideploy collect --app app --version 1.0.0 --bin release\app.exe
         shell: cmd
+        name: collect binaries
 
-      - run:
+      - run: |
           C:\Miniconda\python -m pip install mugicli
           C:\Miniconda\python -m mugicli.pyfind C:\Qt\5.15.2 > qt-listing.txt
+        name: create qt listing
 
       - uses: actions/upload-artifact@v3
         with:
