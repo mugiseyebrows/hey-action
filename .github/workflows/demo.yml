@@ -15,5 +15,7 @@ jobs:
           C:\Miniconda\python -m aqt install 5.15.2 windows desktop win64_mingw81 -O C:\Qt
         if: steps.cache1.outputs.cache-hit != 'true'
       - run: C:\Qt\5.15.2\mingw81_64\bin\qmake.exe --version
-      
+      - run: curl -L -o x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/8.1.0/threads-posix/seh/x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z
+      - run: 7z x -oC:\ x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z
+      - run: C:\mingw64\bin\gcc -v
       
