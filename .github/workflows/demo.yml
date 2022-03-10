@@ -11,12 +11,14 @@ jobs:
         with:
           path: C:\Qt\5.15.2\mingw81_64
           key: qt-5.15.2-win64_mingw81-1
+        name: restore qt from cache
 
       - uses: actions/cache@v1
         id: cache_mingw
         with:
           path: C:\mingw64
           key: x86_64-8.1.0-release-posix-seh-rt_v6-rev0
+        name: restore mingw from cache
 
       - run: |
           C:\Miniconda\python -m pip install aqtinstall
@@ -41,7 +43,7 @@ jobs:
         shell: cmd
         name: build app
       
-      - run:
+      - run: |
           set PATH=C:\mingw64\bin;C:\Qt\5.15.2\mingw81_64\bin;%PATH%
           C:\Miniconda\python -m pip install mugideploy
           C:\Miniconda\python -m mugideploy collect --app app --version 1.0.0 --bin release\app.exe
