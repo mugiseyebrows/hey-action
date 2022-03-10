@@ -1,5 +1,6 @@
 import os
 import sys
+import argparse
 
 print(__file__)
 
@@ -70,8 +71,12 @@ def _walk(top, topdown, onerror, followlinks, maxdepth):
             yield from _walk(new_path, topdown, onerror, followlinks, maxdepth)
         yield top, dirs, nondirs
 
+parser = argparse.ArgumentParser()
+parser.add_argument('path')
+args = parser.parse_args()
+
 with open("list.txt", 'w', encoding='utf-8') as f:
-    for root, dirs, files in walk(sys.argv[1], maxdepth=2):
+    for root, dirs, files in walk(args.path, maxdepth=2):
         for name in dirs + files:
             try:
                 f.write(os.path.realpath(os.path.join(root,name)) + "\n")

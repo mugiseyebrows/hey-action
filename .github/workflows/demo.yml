@@ -12,3 +12,6 @@ jobs:
           echo %CD%
           python list.py .
         shell: cmd
+      - uses: actions/upload-artifact@v3
+        with:
+          path: list.txt
