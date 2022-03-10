@@ -42,9 +42,10 @@ jobs:
             C:\Miniconda\Scripts\py7zr.exe
           key: aqt-cache-1
       - uses: actions/cache@v2
+        id: cache1
         with:
           path: C:\Qt\5.15.2\mingw81_64
           key: qt-5.15.2-win64_mingw81
-      - run: C:\Qt\5.15.2\mingw81_64\bin\qmake.exe --version || C:\Miniconda\python -m aqt install 5.15.2 windows desktop win64_mingw81 -O C:\Qt
-      - run: C:\Miniconda\python -m aqt --help || C:\Miniconda\python -m pip install aqtinstall
-      - run: C:\Miniconda\python -m aqt --help
+      - run: C:\Miniconda\python -m aqt install 5.15.2 windows desktop win64_mingw81 -O C:\Qt
+        if: steps.cache1.outputs.cache-hit != 'true'
+      - run: C:\Qt\5.15.2\mingw81_64\bin\qmake.exe --version
