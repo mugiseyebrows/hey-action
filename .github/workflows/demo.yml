@@ -5,12 +5,11 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
-
-      - run: |
-          echo %PATH%
-          set PATH=C:\Miniconda3;C:\Miniconda\Scripts
-          conda create -n aqt aqtinstall -c conda-forge
-          conda activate aqt
-          echo %CD%
-          conda info --envs
+      - run: set PATH=C:\Miniconda3;C:\Miniconda\Scripts;%PATH%
+        shell: cmd
+      - run: conda create -n aqt
+        shell: cmd
+      - run: conda activate aqt
+        shell: cmd
+      - run: conda info --envs
         shell: cmd
