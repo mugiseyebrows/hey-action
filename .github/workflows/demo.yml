@@ -35,8 +35,12 @@ jobs:
           qmake
           mingw32-make
         shell: cmd
+      
+      - run:
+          C:\Miniconda\python -m pip install mugideploy
+          C:\Miniconda\python -m mugideploy collect --app app --version 1.0.0 --bin release\app.exe
 
       - uses: actions/upload-artifact@v3
         with:
-          path: release\app.exe
+          path: app*.zip
       
