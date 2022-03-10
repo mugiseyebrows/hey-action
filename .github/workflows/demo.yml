@@ -55,5 +55,7 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          path: app*.zip qt-listing.txt
+          path: |
+            app*.zip 
+            qt-listing.txt
       
