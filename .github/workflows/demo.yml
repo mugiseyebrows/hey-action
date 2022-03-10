@@ -10,11 +10,13 @@ jobs:
           python-version: '3.9'
       - run: pip install virtualenv
         shell: cmd
-      - run: |
-          python -m venv env1
-          env1\Scripts\activate
-          pipenv install aqtinstall
-          pip freeze > requirements.txt
+      - run: python -m venv env1
+        shell: cmd
+      - run: env1\Scripts\activate
+        shell: cmd
+      - run: pipenv install aqtinstall
+        shell: cmd
+      - run: pip freeze > requirements.txt
         shell: cmd
       - uses: actions/upload-artifact@v3
         with:
