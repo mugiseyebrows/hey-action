@@ -44,8 +44,5 @@ popd
 del /f Qt-5.15.2-mingw64.zip
 if not exist "Qt-5.15.2-mingw64.zip" 7z a -y "Qt-5.15.2-mingw64.zip" "Qt-5.15.2-mingw64"
 popd
-exit /b
-
-start %~dp0QtCreator-6.0.2-mingw64\bin\qtcreator.exe
 
 
