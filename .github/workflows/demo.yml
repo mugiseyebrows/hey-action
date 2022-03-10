@@ -5,10 +5,8 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
-      - run: |
-          echo %RUNNER_OS%
-          set
-        shell: cmd
-      - uses: actions/upload-artifact@v3
+      - uses: actions/setup-python@v2
         with:
-          path: list.txt
+          python-version: '3.9'
+      - run: python -c "import os;print(os.getcwd())"
+        shell: cmd
