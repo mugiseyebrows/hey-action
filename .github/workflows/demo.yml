@@ -6,7 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         name: checkout
-      - run: foo.bat
+      - run: build2.bat
         shell: cmd
       - uses: actions/upload-artifact@v3
         with:
