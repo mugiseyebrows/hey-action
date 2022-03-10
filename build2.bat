@@ -23,7 +23,7 @@ exit /b
 
 :download_begin
 pushd %~dp0
-if not exist "x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z" "%CURL%" -L -o "x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z" https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/8.1.0/threads-posix/seh/x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z
+if not exist "x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z" "%CURL%" -L -o "x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z" https://storage.googleapis.com/qt-binaries/x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z
 if not exist "qtbase-everywhere-src-5.15.2.zip" "%CURL%" -L -o "qtbase-everywhere-src-5.15.2.zip" https://download.qt.io/official_releases/qt/5.15/5.15.2/submodules/qtbase-everywhere-src-5.15.2.zip
 popd
 
