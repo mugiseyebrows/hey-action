@@ -5,6 +5,9 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
-      - run: C:\Miniconda\condabin\conda.bat init powershell
-      - run: C:\Miniconda\condabin\conda.bat create -n aqtenv
-      - run: C:\Miniconda\condabin\conda.bat env update --file ./.github/workflows/environment.yml --name aqtenv
+      - run: C:\Miniconda\python -m pip install aqtinstall mugicli
+      - run: C:\Miniconda\python -m mugicli.pyfind C:\Miniconda -type d -mmin -5 > modified-packages.txt
+      - run: Get-Content modified-packages.txt
+      - uses: actions/upload-artifact@v3
+        with:
+          path: modified-packages.txt
