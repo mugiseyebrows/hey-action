@@ -5,17 +5,38 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
+
       - uses: actions/cache@v1
-        id: cache1
+        id: cache_qt
         with:
           path: C:\Qt\5.15.2\mingw81_64
           key: qt-5.15.2-win64_mingw81-1
+
+      - uses: actions/cache@v1
+        id: cache_mingw
+        with:
+          path: C:\mingw64
+          key: x86_64-8.1.0-release-posix-seh-rt_v6-rev0
+
       - run: |
           C:\Miniconda\python -m pip install aqtinstall
           C:\Miniconda\python -m aqt install 5.15.2 windows desktop win64_mingw81 -O C:\Qt
-        if: steps.cache1.outputs.cache-hit != 'true'
+        if: steps.cache_qt.outputs.cache-hit != 'true'
+
+      - run: |
+          curl -L -o x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/8.1.0/threads-posix/seh/x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z
+          7z x -oC:\ x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z
+        if: steps.cache_mingw.outputs.cache-hit != 'true'
+
       - run: C:\Qt\5.15.2\mingw81_64\bin\qmake.exe --version
-      - run: curl -L -o x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/8.1.0/threads-posix/seh/x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z
-      - run: 7z x -oC:\ x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z
       - run: C:\mingw64\bin\gcc -v
+      - run: |
+          set PATH=C:\mingw64\bin;C:\Qt\5.15.2\mingw81_64\bin;%PATH%
+          qmake
+          mingw32-make
+        shell: cmd
+
+      - uses: actions/upload-artifact@v3
+        with:
+          path: release\app.exe
       
