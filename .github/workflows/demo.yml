@@ -6,7 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         name: checkout
-      - run: python list.py C:\Strawberry > strawberry.txt
+      - run: C:\Miniconda\python list.py C:\Strawberry > strawberry.txt
       - uses: actions/upload-artifact@v3
         with:
           path: strawberry.txt
