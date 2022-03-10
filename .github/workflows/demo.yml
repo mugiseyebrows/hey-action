@@ -5,6 +5,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
+        name: checkout
 
       - uses: actions/cache@v1
         id: cache_qt
@@ -34,8 +35,10 @@ jobs:
 
       - run: C:\Qt\5.15.2\mingw81_64\bin\qmake.exe --version
         name: test qmake
+        
       - run: C:\mingw64\bin\gcc -v
         name: test gcc
+
       - run: |
           set PATH=C:\mingw64\bin;C:\Qt\5.15.2\mingw81_64\bin;%PATH%
           qmake
@@ -49,6 +52,7 @@ jobs:
           C:\Miniconda\python -m mugideploy collect --app app --version 1.0.0 --bin release\app.exe
         shell: cmd
         name: collect binaries
+
       - run: |
           C:\Miniconda\python -m pip install mugicli
           C:\Miniconda\python -m mugicli.pyfind C:\Qt\5.15.2 > qt-listing.txt
@@ -59,3 +63,8 @@ jobs:
           name: app
           path: app-*-*
         name: upload app.exe and deps
+
+      - uses: softprops/action-gh-release@v1
+        with:
+          files: app-*-*
+        name: release
