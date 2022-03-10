@@ -5,5 +5,6 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
-      - run: ./.github/workflows/create-env.bat
-        shell: cmd
+      - run: C:\Miniconda\condabin\conda.bat init powershell
+      - run: C:\Miniconda\condabin\conda.bat create -n aqtenv
+      - run: C:\Miniconda\condabin\conda.bat env update --file ./.github/workflows/environment.yml --name aqtenv
