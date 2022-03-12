@@ -6,13 +6,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         name: checkout
-      - run: C:\Miniconda\python list.py -o mysql.txt C:\mysql
-      - run: C:\Miniconda\python list.py -o Program-Files.txt "C:\Program Files"
-      - run: C:\Miniconda\python list.py -o msys64.txt C:\msys64
-      - uses: actions/upload-artifact@v3
-        with:
-          path: |
-            mysql.txt
-            Program-Files.txt
-            msys64.txt
+      - run: |
+          set PATH=C:\Program Files\PostgreSQL\14\bin;C:\mysql\bin;%PATH%
+          mysql.exe --version
+          psql.exe --version
+        shell: cmd
+      - run: C:\msys64\usr\bin\file.exe "C:\Program Files\PostgreSQL\14\bin\libpq.dll"
+      - run: C:\msys64\usr\bin\file.exe C:\mysql\bin\mysql.exe
         
