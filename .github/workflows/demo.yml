@@ -8,6 +8,7 @@ jobs:
         name: checkout
 
       - uses: actions/cache@v2
+        id: cache-objects
         with:
           path: "qtbase-everywhere-src-5.15.2/**/*.o"
           key: build-cache-3
@@ -18,6 +19,7 @@ jobs:
           pip install mugicli
           pyfind qtbase-everywhere-src-5.15.2 -iname *.o -exec pytouch -d 1d {} ;
         shell: cmd
+        if: steps.cache-objects.outputs.cache-hit == 'true'
         name: touch objects
 
       - run: build.bat
