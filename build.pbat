@@ -56,6 +56,7 @@ def compile
 
 def main
     rem path must not contain spaces
+    if %~dp0 equ foo echo 1
     set_path(
         C:\windows\system32,
         C:\windows,

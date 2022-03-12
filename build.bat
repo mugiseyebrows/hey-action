@@ -1,7 +1,9 @@
 @echo off
 rem This file is generated from build.pbat, all edits will be lost
 rem path must not contain spaces
-set PATH=C:\windows\system32;C:\windows;C:\Program Files\7-Zip;%~dp0mingw64\bin;C:\Strawberry\perl\bin;%~dp0Qt-5.15.2-mingw64\bin;%~dp0postgresql-14\bin;C:\mysql\lib;C:\Miniconda\python;C:\Miniconda\Scripts;%PATH%pip install mugideploy
+if %~dp0 equ foo echo 1
+set PATH=C:\windows\system32;C:\windows;C:\Program Files\7-Zip;%~dp0mingw64\bin;C:\Strawberry\perl\bin;%~dp0Qt-5.15.2-mingw64\bin;%~dp0postgresql-14\bin;C:\mysql\lib;C:\Miniconda\python;C:\Miniconda\Scripts;%PATH%
+pip install mugideploy
 
 if exist "C:\Program Files\Git\mingw64\bin\curl.exe" set CURL=C:\Program Files\Git\mingw64\bin\curl.exe
 if exist "C:\Windows\System32\curl.exe" set CURL=C:\Windows\System32\curl.exe
