@@ -10,7 +10,7 @@ jobs:
       - uses: actions/cache@v2
         id: cache-objects
         with:
-          path: "qtbase-everywhere-src-5.15.2/**/*.o"
+          path: qtbase-everywhere-src-5.15.2
           key: build-cache-3
         name: build cache
 
@@ -43,6 +43,18 @@ jobs:
           7z a -y "qsqlmysql-win64.zip" "qsqlmysql-win64"
         shell: cmd
         name: qsqlpsql qsqlmysql deps
+
+      - run: |
+          set PATH=C:\Miniconda\python;C:\Miniconda\Scripts;%PATH%
+          pip install mugicli
+          pyfind qtbase-everywhere-src-5.15.2 -not -iname *.o -type f -delete
+          pyfind qtbase-everywhere-src-5.15.2 > test.txt
+        shell: cmd
+        name: prepare cache to store
+
+      - uses: actions/upload-artifact@v3
+        with:
+          path: test.txt
 
       - uses: softprops/action-gh-release@v1
         with:
