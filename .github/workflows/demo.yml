@@ -6,14 +6,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         name: checkout
-      - run: build2.bat
-        shell: cmd
+      - run: C:\Miniconda\python list.py -o mysql.txt C:\mysql
+      - run: C:\Miniconda\python list.py -o Program-Files.txt "C:\Program Files"
+      - run: C:\Miniconda\python list.py -o msys64.txt C:\msys64
       - uses: actions/upload-artifact@v3
         with:
-          path: Qt-5.15.2-mingw64.zip
-      - uses: softprops/action-gh-release@v1
-        with:
-          files: Qt-5.15.2-mingw64.zip
-        if: startsWith(github.ref, 'refs/tags/')
-        name: release
+          path: |
+            mysql.txt
+            Program-Files.txt
+            msys64.txt
         
