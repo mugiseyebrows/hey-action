@@ -46,6 +46,12 @@ def compile
         
         #del /f Qt-5.15.2-mingw64.zip
         zip(Qt-5.15.2-mingw64, Qt-5.15.2-mingw64.zip)
+
+        mugideploy collect --dest qsqlmysql-mingw64 --skip Qt5Core.dll Qt5Sql.dll qt.conf --bin Qt-5.15.2-mingw64\plugins\sqldrivers\qsqlmysql.dll --no-vcredist
+        mugideploy collect --dest qsqlpsql-mingw64 --skip Qt5Core.dll Qt5Sql.dll qt.conf --bin Qt-5.15.2-mingw64\plugins\sqldrivers\qsqlpsql.dll --no-vcredist
+        zip(qsqlmysql-mingw64, qsqlmysql-mingw64.zip)
+        zip(qsqlpsql-mingw64, qsqlpsql-mingw64.zip)
+
     popd
 
 def main
@@ -59,8 +65,11 @@ def main
         %~dp0Qt-5.15.2-mingw64\bin,
         %~dp0postgresql-14\bin,
         C:\mysql\lib,
+        C:\Miniconda\python,
+        C:\Miniconda\Scripts,
         %PATH%
     )
+    pip install mugideploy
 
 order main download unzip compile
 debug off

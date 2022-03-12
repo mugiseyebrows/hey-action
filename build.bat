@@ -1,7 +1,8 @@
 @echo off
 rem This file is generated from build.pbat, all edits will be lost
 rem path must not contain spaces
-set PATH=C:\windows\system32;C:\windows;C:\Program Files\7-Zip;%~dp0mingw64\bin;C:\Strawberry\perl\bin;%~dp0Qt-5.15.2-mingw64\bin;%~dp0postgresql-14\bin;C:\mysql\lib;%PATH%
+set PATH=C:\windows\system32;C:\windows;C:\Program Files\7-Zip;%~dp0mingw64\bin;C:\Strawberry\perl\bin;%~dp0Qt-5.15.2-mingw64\bin;%~dp0postgresql-14\bin;C:\mysql\lib;C:\Miniconda\python;C:\Miniconda\Scripts;%PATH%pip install mugideploy
+
 if exist "C:\Program Files\Git\mingw64\bin\curl.exe" set CURL=C:\Program Files\Git\mingw64\bin\curl.exe
 if exist "C:\Windows\System32\curl.exe" set CURL=C:\Windows\System32\curl.exe
 if not defined CURL goto curl_not_found_begin
@@ -44,6 +45,10 @@ mingw32-make install
 popd
 )
 if not exist "Qt-5.15.2-mingw64.zip" 7z a -y "Qt-5.15.2-mingw64.zip" "Qt-5.15.2-mingw64"
+mugideploy collect --dest qsqlmysql-mingw64 --skip Qt5Core.dll Qt5Sql.dll qt.conf --bin Qt-5.15.2-mingw64\plugins\sqldrivers\qsqlmysql.dll --no-vcredist
+mugideploy collect --dest qsqlpsql-mingw64 --skip Qt5Core.dll Qt5Sql.dll qt.conf --bin Qt-5.15.2-mingw64\plugins\sqldrivers\qsqlpsql.dll --no-vcredist
+if not exist "qsqlmysql-mingw64.zip" 7z a -y "qsqlmysql-mingw64.zip" "qsqlmysql-mingw64"
+if not exist "qsqlpsql-mingw64.zip" 7z a -y "qsqlpsql-mingw64.zip" "qsqlpsql-mingw64"
 popd
 
 
