@@ -10,16 +10,10 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: "qtbase-everywhere-src-5.15.2/**/*.o"
-          key: build-cache
+          key: build-cache-3
         name: build cache
 
-      - run: |
-          xcopy /e /i "C:\Program Files\PostgreSQL\14\bin" postgresql-14\bin > NUL
-          xcopy /e /i "C:\Program Files\PostgreSQL\14\include" postgresql-14\include > NUL
-          7z a -y "postgresql-14.zip" "postgresql-14"
-        shell: cmd
-
-      - run: echo skip
+      - run: build.bat
         shell: cmd
         name: build qt
 
