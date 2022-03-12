@@ -30,7 +30,6 @@ jobs:
           set PATH=C:\Miniconda\python;C:\Miniconda\Scripts;%PATH%
           pip install mugicli
           pyfind qtbase-everywhere-src-5.15.2 -not -iname *.o -type f -delete
-          pyfind qtbase-everywhere-src-5.15.2 > test.txt
         shell: cmd
         name: prepare cache to store
 
