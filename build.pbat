@@ -1,0 +1,63 @@
+def tool_curl
+    find_app3(CURL, [C:\Windows\System32\curl.exe, C:\Program Files\Git\mingw64\bin\curl.exe], curl_not_found)
+
+def tool_patch
+    find_app3(PATCH, [C:\Program Files\Git\usr\bin\patch.exe, C:\Git\usr\bin\patch.exe], patch_not_found)
+
+def curl_not_found then end
+    echo curl_not_found
+
+def patch_not_found then end
+    echo patch_not_found
+
+def download depends on tool_curl
+    pushd %~dp0
+        # mingw
+        download(https://storage.googleapis.com/qt-binaries/x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z, x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z)
+        # qt modules
+        download(https://download.qt.io/official_releases/qt/5.15/5.15.2/submodules/qtbase-everywhere-src-5.15.2.zip, qtbase-everywhere-src-5.15.2.zip)
+
+        xcopy /e /i "C:\Program Files\PostgreSQL\14\bin" pgbin
+        xcopy /e /i "C:\Program Files\PostgreSQL\14\include" pginclude
+    popd
+
+def unzip
+    pushd %~dp0
+        # mingw
+        unzip(x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z, mingw64, force)
+        unzip(qtbase-everywhere-src-5.15.2.zip, qtbase-everywhere-src-5.15.2, force)
+    popd
+
+def compile
+    pushd %~dp0
+        #rmdir /q /s Qt-5.15.2-mingw64
+        if "%SKIP_BASE%" neq "1" (
+            pushd qtbase-everywhere-src-5.15.2
+                del /f config.cache
+                call configure -prefix %~dp0Qt-5.15.2-mingw64 -opensource -confirm-license -shared -plugin-sql-odbc -plugin-sql-psql -plugin-sql-mysql -platform win32-g++ -opengl desktop -release -nomake tests MYSQL_PREFIX=C:\mysql MYSQL_INCDIR=C:\mysql\include MYSQL_LIBDIR=C:\mysql\lib PSQL_INCDIR=%~dp0pgnclude PSQL_LIBDIR=%~dp0pgbin
+                mingw32-make -j4
+                mingw32-make install
+            popd
+        )
+        
+        del /f Qt-5.15.2-mingw64.zip
+        zip(Qt-5.15.2-mingw64, Qt-5.15.2-mingw64.zip)
+    popd
+
+def main
+    rem path must not contain spaces
+    set_path(
+        C:\windows\system32,
+        C:\windows,
+        C:\Program Files\7-Zip,
+        %~dp0mingw64\bin,
+        C:\Strawberry\perl\bin,
+        %~dp0Qt-5.15.2-mingw64\bin,
+        %~dp0pgbin\bin,
+        C:\mysql\lib,
+        %PATH%
+    )
+
+order main download unzip compile
+debug off
+clean off

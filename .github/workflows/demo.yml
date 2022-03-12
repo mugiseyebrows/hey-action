@@ -6,11 +6,28 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         name: checkout
+
+      - uses: actions/cache@v2
+        with:
+          path: "**/*.o"
+          key: build-cache
+        name: build cache
+
       - run: |
-          set PATH=C:\Program Files\PostgreSQL\14\bin;C:\mysql\bin;%PATH%
-          mysql.exe --version
-          psql.exe --version
+          set PATH=C:\Miniconda\python;C:\Miniconda\Scripts;%PATH%
+          pip install mugicli
+          pyfind -iname *.o -exec pytouch -d 1d {} ;
         shell: cmd
-      - run: C:\msys64\usr\bin\file.exe "C:\Program Files\PostgreSQL\14\bin\libpq.dll"
-      - run: C:\msys64\usr\bin\file.exe C:\mysql\bin\mysql.exe
-        
+        name: touch objects
+
+      - run: build2.bat
+        shell: cmd
+
+      - uses: actions/upload-artifact@v3
+        with:
+          path: Qt-5.15.2-mingw64.zip
+      - uses: softprops/action-gh-release@v1
+        with:
+          files: Qt-5.15.2-mingw64.zip
+        if: startsWith(github.ref, 'refs/tags/')
+        name: release
