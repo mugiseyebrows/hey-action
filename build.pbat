@@ -19,8 +19,6 @@ def download depends on tool_curl
 
         xcopy /e /i "C:\Program Files\PostgreSQL\14\bin" postgresql-14\bin > NUL
         xcopy /e /i "C:\Program Files\PostgreSQL\14\include" postgresql-14\include > NUL
-        zip(pgbin, pgbin.zip)
-        zip(pginclude, pginclude.zip)
     popd
 
 def unzip
