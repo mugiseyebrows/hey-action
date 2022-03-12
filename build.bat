@@ -24,8 +24,8 @@ exit /b
 pushd %~dp0
 if not exist "x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z" "%CURL%" -L -o "x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z" https://storage.googleapis.com/qt-binaries/x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z
 if not exist "qtbase-everywhere-src-5.15.2.zip" "%CURL%" -L -o "qtbase-everywhere-src-5.15.2.zip" https://download.qt.io/official_releases/qt/5.15/5.15.2/submodules/qtbase-everywhere-src-5.15.2.zip
-xcopy /e /i "C:\Program Files\PostgreSQL\14\bin" postgresql-14\bin > NUL
-xcopy /e /i "C:\Program Files\PostgreSQL\14\include" postgresql-14\include > NUL
+xcopy /s /q /y /i "C:\Program Files\PostgreSQL\14\bin" postgresql-14\bin
+xcopy /s /q /y /i "C:\Program Files\PostgreSQL\14\include" postgresql-14\include
 popd
 
 pushd %~dp0

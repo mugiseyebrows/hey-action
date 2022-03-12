@@ -17,8 +17,8 @@ def download depends on tool_curl
         # qt modules
         download(https://download.qt.io/official_releases/qt/5.15/5.15.2/submodules/qtbase-everywhere-src-5.15.2.zip, qtbase-everywhere-src-5.15.2.zip)
 
-        xcopy /e /i "C:\Program Files\PostgreSQL\14\bin" postgresql-14\bin > NUL
-        xcopy /e /i "C:\Program Files\PostgreSQL\14\include" postgresql-14\include > NUL
+        xcopy /s /q /y /i "C:\Program Files\PostgreSQL\14\bin" postgresql-14\bin
+        xcopy /s /q /y /i "C:\Program Files\PostgreSQL\14\include" postgresql-14\include
     popd
 
 def unzip
@@ -39,6 +39,8 @@ def compile
                 mingw32-make -j2
                 mingw32-make install
                 #zip(postgresql-14, postgresql-14.zip)
+                #zip(qsqlpsql-win64, qsqlpsql-win64.zip)
+                #zip(qsqlmysql-win64, qsqlmysql-win64.zip)
             popd
         )
         

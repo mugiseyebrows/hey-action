@@ -13,16 +13,40 @@ jobs:
           key: build-cache-3
         name: build cache
 
+      - run: |
+          set PATH=C:\Miniconda\python;C:\Miniconda\Scripts;%PATH%
+          pip install mugicli
+          pyfind qtbase-everywhere-src-5.15.2 -iname *.o -exec pytouch -d 1d {} ;
+        shell: cmd
+        name: touch objects
+
       - run: build.bat
         shell: cmd
         name: build qt
 
-      - uses: actions/upload-artifact@v3
-        with:
-          path: postgresql-14.zip
+      - run: |
+          set PATH=C:\Miniconda\python;C:\Miniconda\Scripts;%PATH%
+          pip install mugideploy
+          mugideploy collect --bin Qt-5.15.2-mingw64\plugins\sqldrivers\qsqlpsql.dll --no-vcredist
+          del qsqlpsql-0.0.1-win64\Qt5Core.dll
+          del qsqlpsql-0.0.1-win64\Qt5Sql.dll
+          del qsqlpsql-0.0.1-win64\qt.conf
+          move qsqlpsql-0.0.1-win64 qsqlpsql-win64
+          7z a -y "qsqlpsql-win64.zip" "qsqlpsql-win64"
+          mugideploy collect --bin Qt-5.15.2-mingw64\plugins\sqldrivers\qsqlmysql.dll --no-vcredist
+          del qsqlmysql-0.0.1-win64\Qt5Core.dll
+          del qsqlmysql-0.0.1-win64\Qt5Sql.dll
+          del qsqlmysql-0.0.1-win64\qt.conf
+          move qsqlmysql-0.0.1-win64 qsqlmysql-win64
+          7z a -y "qsqlmysql-win64.zip" "qsqlmysql-win64"
+        shell: cmd
+        name: qsqlpsql qsqlmysql deps
 
       - uses: softprops/action-gh-release@v1
         with:
-          files: Qt-5.15.2-mingw64.zip
+          files: |
+            Qt-5.15.2-mingw64.zip
+            qsqlpsql-win64.zip
+            qsqlmysql-win64.zip
         if: startsWith(github.ref, 'refs/tags/')
         name: release
