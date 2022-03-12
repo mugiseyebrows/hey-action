@@ -20,13 +20,22 @@ jobs:
         shell: cmd
         name: touch objects
 
-      - run: build.bat
+      - run: |
+          xcopy /e /i "C:\Program Files\PostgreSQL\14\bin" pgbin > NUL
+          xcopy /e /i "C:\Program Files\PostgreSQL\14\include" pginclude > NUL
+          if not exist "pgbin.zip" 7z a -y "pgbin.zip" "pgbin"
+          if not exist "pginclude.zip" 7z a -y "pginclude.zip" "pginclude"
+        shell: cmd
+
+      - run: echo skip
         shell: cmd
         name: build qt
 
       - uses: actions/upload-artifact@v3
         with:
-          path: Qt-5.15.2-mingw64.zip
+          path: |
+            pgbin.zip
+            pginclude.zip
       - uses: softprops/action-gh-release@v1
         with:
           files: Qt-5.15.2-mingw64.zip
