@@ -20,8 +20,9 @@ jobs:
         shell: cmd
         name: touch objects
 
-      - run: build2.bat
+      - run: build.bat
         shell: cmd
+        name: build qt
 
       - uses: actions/upload-artifact@v3
         with:
