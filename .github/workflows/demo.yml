@@ -33,10 +33,6 @@ jobs:
         shell: cmd
         name: prepare cache to store
 
-      - uses: actions/upload-artifact@v3
-        with:
-          path: test.txt
-
       - uses: softprops/action-gh-release@v1
         with:
           files: |
