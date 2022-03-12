@@ -15,17 +15,18 @@ jobs:
 
       - run: |
           set PATH=C:\Miniconda\python;C:\Miniconda\Scripts;%PATH%
-          pip install mugicli
-          pyfind qtbase-everywhere-src-5.15.2 -iname *.o -exec pytouch -d 1d {} ;
+          pip install mugideploy
+          mugideploy find -o deps.txt --bin "C:\Program Files\PostgreSQL\14\bin\libpq.dll"
         shell: cmd
-        name: touch objects
-
-      - run: where API-MS-WIN-CRT-HEAP-L1-1-0.DLL
-        shell: cmd
+        name: find libpq.dll deps
 
       - run: echo skip
         shell: cmd
         name: build qt
+
+      - uses: actions/upload-artifact@v3
+        with:
+          path: deps.txt
 
       - uses: softprops/action-gh-release@v1
         with:
