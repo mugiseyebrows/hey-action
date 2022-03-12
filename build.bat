@@ -39,7 +39,7 @@ pushd %~dp0
 if "%SKIP_BASE%" neq "1" (
 pushd qtbase-everywhere-src-5.15.2
 del /f config.cache
-call configure -prefix %~dp0Qt-5.15.2-mingw64 -opensource -confirm-license -shared -plugin-sql-odbc -plugin-sql-psql -plugin-sql-mysql -platform win32-g++ -opengl desktop -release -nomake tests -nomake examples MYSQL_PREFIX=C:\mysql MYSQL_INCDIR=C:\mysql\include MYSQL_LIBDIR=C:\mysql\lib PSQL_INCDIR=%~dp0pgnclude PSQL_LIBDIR=%~dp0pgbin
+call configure -prefix %~dp0Qt-5.15.2-mingw64 -opensource -confirm-license -shared -plugin-sql-odbc -plugin-sql-psql -plugin-sql-mysql -platform win32-g++ -opengl desktop -release -nomake tests -nomake examples MYSQL_PREFIX=C:\mysql MYSQL_INCDIR=C:\mysql\include MYSQL_LIBDIR=C:\mysql\lib PSQL_INCDIR=%~dp0pginclude PSQL_LIBDIR=%~dp0pgbin
 type qtbase-everywhere-src-5.15.2\config.log
 mingw32-make -j2
 mingw32-make install

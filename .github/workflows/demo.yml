@@ -14,11 +14,10 @@ jobs:
         name: build cache
 
       - run: |
-          set PATH=C:\Miniconda\python;C:\Miniconda\Scripts;%PATH%
-          pip install mugideploy
-          mugideploy find -o deps.txt --bin "C:\Program Files\PostgreSQL\14\bin\libpq.dll"
+          xcopy /e /i "C:\Program Files\PostgreSQL\14\bin" postgresql-14\bin > NUL
+          xcopy /e /i "C:\Program Files\PostgreSQL\14\include" postgresql-14\include > NUL
+          7z a -y "postgresql-14.zip" "postgresql-14"
         shell: cmd
-        name: find libpq.dll deps
 
       - run: echo skip
         shell: cmd
@@ -26,7 +25,7 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          path: deps.txt
+          path: postgresql-14.zip
 
       - uses: softprops/action-gh-release@v1
         with:
