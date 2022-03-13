@@ -9,7 +9,7 @@ runs:
   steps:
   - run: |
       set PATH=C:\Miniconda\python;C:\Miniconda\Scripts
-      pip install mugideploy
+      pip install mugideploy==0.0.12
       echo ::set-output name=mugideploy::C:\Miniconda\Scripts\mugideploy
     shell: cmd
     id: main
