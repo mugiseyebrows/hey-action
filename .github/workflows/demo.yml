@@ -1,43 +1,12 @@
 name: GitHub Actions Demo
 on: [push]
 jobs:
-  Explore-GitHub-Actions:
+  main:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
         name: checkout
 
-      - uses: actions/cache@v1
-        id: cache-objects
-        with:
-          path: qtbase-everywhere-src-5.15.2
-          key: build-cache-3
-        name: build cache
-
-      - run: |
-          set PATH=C:\Miniconda\python;C:\Miniconda\Scripts;%PATH%
-          pip install mugicli
-          pyfind qtbase-everywhere-src-5.15.2 -iname *.o -exec pytouch -d 1d {} ;
-        shell: cmd
-        if: steps.cache-objects.outputs.cache-hit == 'true'
-        name: touch objects
-
-      - run: build.bat
+      - run: curl --help
         shell: cmd
         name: build qt
-
-      - run: |
-          set PATH=C:\Miniconda\python;C:\Miniconda\Scripts;%PATH%
-          pip install mugicli
-          pyfind qtbase-everywhere-src-5.15.2 -not -iname *.o -type f -delete
-        shell: cmd
-        name: prepare cache to store
-
-      - uses: softprops/action-gh-release@v1
-        with:
-          files: |
-            Qt-5.15.2-mingw64.zip
-            qsqlmysql-mingw64.zip
-            qsqlpsql-mingw64.zip
-        if: startsWith(github.ref, 'refs/tags/')
-        name: release

@@ -4,10 +4,10 @@ def tool_curl
 def tool_patch
     find_app3(PATCH, [C:\Program Files\Git\usr\bin\patch.exe, C:\Git\usr\bin\patch.exe], patch_not_found)
 
-def curl_not_found then end
+def curl_not_found
     echo curl_not_found
 
-def patch_not_found then end
+def patch_not_found
     echo patch_not_found
 
 def download depends on tool_curl
@@ -59,7 +59,7 @@ def compile
         mugideploy collect --dest qsqlpsql-mingw64 --skip Qt5Core.dll Qt5Sql.dll qt.conf --bin Qt-5.15.2-mingw64\plugins\sqldrivers\qsqlpsql.dll --no-vcredist
         zip(qsqlmysql-mingw64, qsqlmysql-mingw64.zip)
         zip(qsqlpsql-mingw64, qsqlpsql-mingw64.zip)
-
+        download(https://github.com/mugiseyebrows/hey-action/releases/download/v14/Qt-5.15.2-mingw64.zip, Qt-5.15.2-mingw64.zip)
     popd
 
 def main
@@ -70,9 +70,9 @@ def main
         C:\windows,
         C:\Program Files\7-Zip,
         %~dp0mingw64\bin,
-        C:\Strawberry\perl\bin,
         %~dp0Qt-5.15.2-mingw64\bin,
         %~dp0postgresql-14\bin,
+        C:\Strawberry\perl\bin,
         C:\mysql\lib,
         C:\Miniconda\python,
         C:\Miniconda\Scripts,
