@@ -10,6 +10,6 @@ runs:
   - run: |
       curl -L -o Qt-5.15.2-mingw64.zip https://github.com/mugiseyebrows/hey-action/releases/download/v14/Qt-5.15.2-mingw64.zip
       7z x Qt-5.15.2-mingw64.zip
-      echo "::set-output name=qt-path::Qt-5.15.2-mingw64"
+      echo ::set-output name=qt-path::Qt-5.15.2-mingw64
     shell: cmd
     id: main
