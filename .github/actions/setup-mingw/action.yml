@@ -1,0 +1,19 @@
+name: Setup Qt
+description: Setups Qt
+outputs:
+  path:
+    description: Mingw path
+    value: ${{ steps.main.outputs.path }}
+  bin-path:
+    description: Mingw bin path
+    value: ${{ steps.main.outputs.bin-path }}
+runs:
+  using: composite
+  steps:
+  - run: |
+      curl -L -o x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z https://storage.googleapis.com/qt-binaries/x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z
+      7z x x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z
+      echo ::set-output name=path::%CD%\mingw64
+      echo ::set-output name=bin-path::%CD%\mingw64\bin
+    shell: cmd
+    id: main

@@ -10,5 +10,22 @@ jobs:
       - uses: ./.github/actions/setup-qt
         id: setup-qt
 
-      - run: echo ${{ steps.setup-qt.outputs.qt-path }} ${{ steps.setup-qt.outputs.qt-bin-path }}
+      - uses: ./.github/actions/setup-mingw
+        id: setup-mingw
+
+      - uses: ./.github/actions/setup-mugideploy
+        id: setup-mugideploy
+
+      - run: |
+          set PATH=${{ steps.setup-qt.outputs.bin-path }};${{ steps.setup-mingw.outputs.bin-path }};%PATH%
+          qmake
+          mingw32-make release
+          ${{ steps.setup-mugideploy.outputs.mugideploy }} collect --app app --version 1.0.0 --bin release\app.exe
+          7z a app-1.0.0-win64.zip app-1.0.0-win64
         shell: cmd
+
+      - uses: softprops/action-gh-release@v1
+        with:
+          files: app-1.0.0-win64.zip
+        if: startsWith(github.ref, 'refs/tags/')
+        name: release

@@ -1,0 +1,15 @@
+name: Setup mugideploy
+description: Setups mugideploy
+outputs:
+  mugideploy:
+    description: mugideploy executable
+    value: ${{ steps.main.outputs.mugideploy }}
+runs:
+  using: composite
+  steps:
+  - run: |
+      set PATH=C:\Miniconda\python;C:\Miniconda\Scripts
+      pip install mugideploy
+      echo ::set-output name=mugideploy::C:\Miniconda\Scripts\mugideploy
+    shell: cmd
+    id: main
