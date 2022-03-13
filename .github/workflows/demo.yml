@@ -11,3 +11,4 @@ jobs:
         id: setup-qt
 
       - run: echo ${{ steps.setup-qt.outputs.qt-path }}
+        shell: cmd
