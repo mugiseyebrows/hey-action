@@ -8,7 +8,7 @@ jobs:
         name: checkout
 
       - uses: ./.github/actions/setup-qt
-        id: setup-qt
+        id: x
 
-      - run: echo ${{ steps.setup-qt.outputs.qt-path }}
+      - run: echo "${{ steps.x.outputs.qt-path }}"
         shell: cmd
