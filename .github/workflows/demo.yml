@@ -34,3 +34,4 @@ jobs:
           files: app-1.0.0-win64.zip
         if: startsWith(github.ref, 'refs/tags/')
         name: release
+        
