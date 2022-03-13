@@ -7,6 +7,10 @@ outputs:
 runs:
   using: composite
   steps:
+  - uses: actions/cache@v1
+    with:
+      path: c:\users\runneradmin\appdata\local\pip\cache
+      key: mugideploy-pip-cache
   - run: |
       set PATH=C:\Miniconda\python;C:\Miniconda\Scripts
       pip install mugideploy
