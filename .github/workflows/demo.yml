@@ -13,6 +13,11 @@ jobs:
       - uses: ./.github/actions/setup-mingw
         id: setup-mingw
 
+      - uses: actions/cache@v1
+        with:
+          path: c:\users\runneradmin\appdata\local\pip\cache
+          key: pip-cache
+
       - uses: ./.github/actions/setup-mugideploy
         id: setup-mugideploy
 
