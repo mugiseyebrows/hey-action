@@ -1,0 +1,15 @@
+name: Setup Qt
+description: Setups Qt
+outputs:
+  qt-path:
+    description: Qt path
+    value: ${{ steps.main.outputs.qt-path }}
+runs:
+  using: composite
+  steps:
+  - run: |
+      curl -L -o Qt-5.15.2-mingw64.zip https://github.com/mugiseyebrows/hey-action/releases/download/v14/Qt-5.15.2-mingw64.zip
+      7z x Qt-5.15.2-mingw64.zip
+      ::set-output name=qt-path::Qt-5.15.2-mingw64
+    shell: cmd
+    id: main
