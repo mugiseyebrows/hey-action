@@ -9,5 +9,5 @@ jobs:
 
       - uses: ./.github/actions/setup-qt
         id: setup-qt
-        
-      - run: echo {{ steps.setup-qt.outputs.qt-path }}
+
+      - run: echo ${{ steps.setup-qt.outputs.qt-path }}
