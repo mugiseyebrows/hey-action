@@ -7,6 +7,8 @@ jobs:
       - uses: actions/checkout@v2
         name: checkout
 
-      - run: curl --help
+      - run: |
+          curl -L -o "Qt-5.15.2-mingw64.zip" https://github.com/mugiseyebrows/hey-action/releases/download/v14/Qt-5.15.2-mingw64.zip
+          dir
         shell: cmd
         name: build qt
