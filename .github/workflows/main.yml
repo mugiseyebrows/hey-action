@@ -18,13 +18,19 @@ jobs:
 
       - uses: ./.github/actions/setup-mugideploy
         id: setup-mugideploy
+      
+      - uses: ./.github/actions/setup-qwt
+        id: setup-qwt
 
       - run: |
-          set PATH=${{ steps.setup-qt.outputs.bin-path }};${{ steps.setup-mingw.outputs.bin-path }};%PATH%
+          set PATH=${{ steps.setup-qt.outputs.bin-path }};${{ steps.setup-mingw.outputs.bin-path }};${{ steps.setup-qwt.outputs.bin-path }};%PATH%
+          pushd test-qwt
           qmake
           mingw32-make release
-          ${{ steps.setup-mugideploy.outputs.mugideploy }} collect --app app --version 1.0.0 --bin release\app.exe
+          ${{ steps.setup-mugideploy.outputs.mugideploy }} collect --app app --version 1.0.0 --bin test-qwt\test-qwt.exe
           7z a app-1.0.0-win64.zip app-1.0.0-win64
+          popd
+          
         shell: cmd
 
       - uses: softprops/action-gh-release@v1

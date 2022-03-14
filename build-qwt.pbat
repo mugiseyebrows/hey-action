@@ -36,7 +36,7 @@ def main
 
 order main fetch compile zip
 curl_in_path true
-download_test on
-unzip_test on
-zip_test on
+download_test off
+unzip_test off
+zip_test off
 

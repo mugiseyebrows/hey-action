@@ -12,8 +12,8 @@ echo patch not found
 exit /b
 
 :fetch_begin
-if not exist qwt-6.2.0.zip curl -L -o qwt-6.2.0.zip https://storage.googleapis.com/qt-binaries/qwt-6.2.0.zip
-if not exist qwt-6.2.0 7z x -y qwt-6.2.0.zip
+curl -L -o qwt-6.2.0.zip https://storage.googleapis.com/qt-binaries/qwt-6.2.0.zip
+7z x -y qwt-6.2.0.zip
 pushd qwt-6.2.0
 "%PATCH%" -p1 < %~dp00001-install-dest.patch
 popd
@@ -24,6 +24,6 @@ mingw32-make -j2 release
 mingw32-make install
 popd
 
-if not exist Qwt-6.2.0-mingw64.zip 7z a -y Qwt-6.2.0-mingw64.zip Qwt-6.2.0-mingw64
+7z a -y Qwt-6.2.0-mingw64.zip Qwt-6.2.0-mingw64
 
 

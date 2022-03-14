@@ -1,0 +1,23 @@
+name: Setup Qwt
+description: Setups Qwt
+outputs:
+  path:
+    description: Qwt path
+    value: ${{ steps.main.outputs.path }}
+  lib-path:
+    description: Qwt lib path
+    value: ${{ steps.main.outputs.lib-path }}
+  bin-path:
+    description: Qwt lib path
+    value: ${{ steps.main.outputs.bin-path }}
+runs:
+  using: composite
+  steps:
+  - run: |
+      curl -L -o Qt-5.15.2-mingw64.zip https://github.com/mugiseyebrows/hey-action/releases/download/qwt/Qwt-6.2.0-mingw64.zip
+      7z x Qwt-6.2.0-mingw64.zip
+      echo ::set-output name=path::%CD%\Qwt-6.2.0-mingw64
+      echo ::set-output name=lib-path::%CD%\Qwt-6.2.0-mingw64\lib
+      echo ::set-output name=bin-path::%CD%\Qwt-6.2.0-mingw64\lib
+    shell: cmd
+    id: main
