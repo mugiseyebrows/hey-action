@@ -14,7 +14,7 @@ runs:
   using: composite
   steps:
   - run: |
-      curl -L -o Qt-5.15.2-mingw64.zip https://github.com/mugiseyebrows/hey-action/releases/download/qwt/Qwt-6.2.0-mingw64.zip
+      curl -L -o Qwt-6.2.0-mingw64.zip https://github.com/mugiseyebrows/hey-action/releases/download/qwt/Qwt-6.2.0-mingw64.zip
       7z x Qwt-6.2.0-mingw64.zip
       echo ::set-output name=path::%CD%\Qwt-6.2.0-mingw64
       echo ::set-output name=lib-path::%CD%\Qwt-6.2.0-mingw64\lib
