@@ -1,5 +1,8 @@
 name: GitHub Actions Demo
-on: [push]
+on:
+  push:
+    tags:
+      - "test*"
 jobs:
   main:
     runs-on: windows-latest
