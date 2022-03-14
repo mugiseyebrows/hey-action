@@ -25,17 +25,17 @@ exit /b
 
 :download_begin
 pushd %~dp0
-if not exist "x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z" "%CURL%" -L -o "x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z" https://storage.googleapis.com/qt-binaries/x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z
-if not exist "qtbase-everywhere-src-5.15.2.zip" "%CURL%" -L -o "qtbase-everywhere-src-5.15.2.zip" https://download.qt.io/official_releases/qt/5.15/5.15.2/submodules/qtbase-everywhere-src-5.15.2.zip
-if not exist "qtsvg-everywhere-src-5.15.2.zip" "%CURL%" -L -o "qtsvg-everywhere-src-5.15.2.zip" https://download.qt.io/official_releases/qt/5.15/5.15.2/submodules/qtsvg-everywhere-src-5.15.2.zip
+if not exist x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z curl -L -o x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z https://storage.googleapis.com/qt-binaries/x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z
+if not exist qtbase-everywhere-src-5.15.2.zip curl -L -o qtbase-everywhere-src-5.15.2.zip https://download.qt.io/official_releases/qt/5.15/5.15.2/submodules/qtbase-everywhere-src-5.15.2.zip
+if not exist qtsvg-everywhere-src-5.15.2.zip curl -L -o qtsvg-everywhere-src-5.15.2.zip https://download.qt.io/official_releases/qt/5.15/5.15.2/submodules/qtsvg-everywhere-src-5.15.2.zip
 xcopy /s /q /y /i "C:\Program Files\PostgreSQL\14\bin" postgresql-14\bin
 xcopy /s /q /y /i "C:\Program Files\PostgreSQL\14\include" postgresql-14\include
 popd
 
 pushd %~dp0
-if not exist "mingw64" 7z x -y "x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z"
-7z x -y "qtbase-everywhere-src-5.15.2.zip"
-if not exist "qtsvg-everywhere-src-5.15.2" 7z x -y "qtsvg-everywhere-src-5.15.2.zip"
+if not exist mingw64 7z x -y x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z
+7z x -y qtbase-everywhere-src-5.15.2.zip
+if not exist qtsvg-everywhere-src-5.15.2 7z x -y qtsvg-everywhere-src-5.15.2.zip
 popd
 
 pushd %~dp0
@@ -54,12 +54,12 @@ mingw32-make -j2
 mingw32-make install
 popd
 )
-if not exist "Qt-5.15.2-mingw64.zip" 7z a -y "Qt-5.15.2-mingw64.zip" "Qt-5.15.2-mingw64"
+if not exist Qt-5.15.2-mingw64.zip 7z a -y Qt-5.15.2-mingw64.zip Qt-5.15.2-mingw64
 mugideploy collect --dest qsqlmysql-mingw64 --skip Qt5Core.dll Qt5Sql.dll qt.conf --bin Qt-5.15.2-mingw64\plugins\sqldrivers\qsqlmysql.dll --no-vcredist
 mugideploy collect --dest qsqlpsql-mingw64 --skip Qt5Core.dll Qt5Sql.dll qt.conf --bin Qt-5.15.2-mingw64\plugins\sqldrivers\qsqlpsql.dll --no-vcredist
-if not exist "qsqlmysql-mingw64.zip" 7z a -y "qsqlmysql-mingw64.zip" "qsqlmysql-mingw64"
-if not exist "qsqlpsql-mingw64.zip" 7z a -y "qsqlpsql-mingw64.zip" "qsqlpsql-mingw64"
-if not exist "Qt-5.15.2-mingw64.zip" "%CURL%" -L -o "Qt-5.15.2-mingw64.zip" https://github.com/mugiseyebrows/hey-action/releases/download/v14/Qt-5.15.2-mingw64.zip
+if not exist qsqlmysql-mingw64.zip 7z a -y qsqlmysql-mingw64.zip qsqlmysql-mingw64
+if not exist qsqlpsql-mingw64.zip 7z a -y qsqlpsql-mingw64.zip qsqlpsql-mingw64
+if not exist Qt-5.15.2-mingw64.zip curl -L -o Qt-5.15.2-mingw64.zip https://github.com/mugiseyebrows/hey-action/releases/download/v14/Qt-5.15.2-mingw64.zip
 popd
 
 

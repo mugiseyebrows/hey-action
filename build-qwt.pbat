@@ -1,0 +1,42 @@
+def tool_patch
+    find_app(PATCH, [C:\Program Files\Git\usr\bin\patch.exe, C:\Git\usr\bin\patch.exe], patch_not_found)
+
+def patch_not_found
+    echo patch not found
+
+def fetch depends on tool_patch
+    download(https://storage.googleapis.com/qt-binaries/qwt-6.2.0.zip, qwt-6.2.0.zip)
+    unzip(qwt-6.2.0.zip, qwt-6.2.0)
+    pushd qwt-6.2.0
+        "%PATCH%" -p1 < %~dp00001-install-dest.patch
+    popd
+
+def compile
+    pushd qwt-6.2.0
+        qmake "CONFIG+=release" QWT_INSTALL_PREFIX=%~dp0Qwt-6.2.0-mingw64
+        mingw32-make -j2 release
+        mingw32-make install
+    popd
+
+def zip
+    zip(Qwt-6.2.0-mingw64, Qwt-6.2.0-mingw64.zip)
+
+def main
+    set_path(
+        C:\windows\system32,
+        C:\windows,
+        C:\Program Files\7-Zip,
+        %~dp0mingw64\bin,
+        %~dp0Qt-5.15.2-mingw64\bin,
+        C:\Program Files\Git\cmd,
+        C:\Miniconda\python,
+        C:\Miniconda\Scripts,
+        %PATH%
+    )
+
+order main fetch compile zip
+curl_in_path true
+download_test on
+unzip_test on
+zip_test on
+
