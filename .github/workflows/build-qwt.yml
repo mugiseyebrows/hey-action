@@ -7,6 +7,8 @@ jobs:
   main:
     runs-on: windows-latest
     steps:
+      - uses: actions/checkout@v2
+        name: checkout
       - uses: ./.github/actions/setup-qt
       - uses: ./.github/actions/setup-mingw
       - run: build-qwt.bat
