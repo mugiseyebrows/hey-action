@@ -1,4 +1,4 @@
-name: GitHub Actions Demo
+name: main
 on:
   push:
     tags:
@@ -24,12 +24,12 @@ jobs:
 
       - run: |
           set PATH=${{ steps.setup-qt.outputs.bin-path }};${{ steps.setup-mingw.outputs.bin-path }};${{ steps.setup-qwt.outputs.bin-path }};%PATH%
-          pushd test-qwt
-          qmake
-          mingw32-make release
-          ${{ steps.setup-mugideploy.outputs.mugideploy }} collect --app app --version 1.0.0 --bin test-qwt\test-qwt.exe
-          7z a app-1.0.0-win64.zip app-1.0.0-win64
+            pushd test-qwt
+            qmake
+            mingw32-make release
           popd
+          ${{ steps.setup-mugideploy.outputs.mugideploy }} collect --app app --version 1.0.0 --bin test-qwt\release\test-qwt.exe
+          7z a app-1.0.0-win64.zip app-1.0.0-win64
           
         shell: cmd
 
