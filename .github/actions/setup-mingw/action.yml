@@ -15,7 +15,7 @@ runs:
       7z x x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z
       echo ::set-output name=path::%CD%\mingw64
       echo ::set-output name=bin-path::%CD%\mingw64\bin
-      echo MINGW_BIN_PATH=%CD%\mingw64\bin >> %GITHUB_ENV%
-      echo MINGW_VERSION=8.1.0 >> %GITHUB_ENV%
+      echo MINGW_BIN_PATH=%CD%\mingw64\bin>> %GITHUB_ENV%
+      echo MINGW_VERSION=8.1.0>> %GITHUB_ENV%
     shell: cmd
     id: main

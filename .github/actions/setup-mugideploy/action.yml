@@ -15,6 +15,6 @@ runs:
       set PATH=C:\Miniconda\python;C:\Miniconda\Scripts
       pip install mugideploy
       echo ::set-output name=mugideploy::C:\Miniconda\Scripts\mugideploy
-      echo MUGIDEPLOY_PATH=C:\Miniconda\Scripts\mugideploy >> %GITHUB_ENV%
+      echo MUGIDEPLOY_PATH=C:\Miniconda\Scripts\mugideploy>> %GITHUB_ENV%
     shell: cmd
     id: main
