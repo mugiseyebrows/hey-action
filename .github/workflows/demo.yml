@@ -8,29 +8,22 @@ jobs:
         name: checkout
 
       - uses: ./.github/actions/setup-qt
-        id: setup-qt
+        name: setup-qt
 
       - uses: ./.github/actions/setup-mingw
-        id: setup-mingw
+        name: setup-mingw
 
       - uses: ./.github/actions/setup-mugideploy
-        id: setup-mugideploy
-
-      - run: echo %QT_BIN_PATH%
-        shell: cmd
-        name: test env variable
-
-      - run: type %GITHUB_ENV%
-        shell: cmd
-        name: test GITHUB_ENV
+        name: setup-mugideploy
 
       - run: |
-          set PATH=${{ steps.setup-qt.outputs.bin-path }};${{ steps.setup-mingw.outputs.bin-path }};%PATH%
+          set PATH=%QT_BIN_PATH%;%MINGW_BIN_PATH%;%PATH%
           qmake
           mingw32-make release
-          ${{ steps.setup-mugideploy.outputs.mugideploy }} collect --app app --version 1.0.0 --bin release\app.exe
+          %MUGIDEPLOY_PATH% collect --app app --version 1.0.0 --bin release\app.exe
           7z a app-1.0.0-win64.zip app-1.0.0-win64
         shell: cmd
+        name: build
 
       - uses: softprops/action-gh-release@v1
         with:
