@@ -10,4 +10,7 @@ jobs:
 
       - uses: ./.github/actions/bar
         with:
-          modules: foo bar baz
+          modules: |
+            foo
+            bar
+            baz
