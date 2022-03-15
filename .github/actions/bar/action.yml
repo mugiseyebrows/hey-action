@@ -1,0 +1,13 @@
+inputs:
+  modules:
+    description: modules
+
+runs:
+  using: composite
+  steps:
+  - run: |
+      for %%i in (${{ inputs.modules }}) do (
+        echo %%i
+        echo meow
+      )
+    shell: cmd

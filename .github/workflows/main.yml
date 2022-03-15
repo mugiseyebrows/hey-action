@@ -1,8 +1,8 @@
-name: main
-on:
+name: GitHub Actions Demo
+on: 
   push:
     tags:
-      - "test*"
+      '*'
 jobs:
   main:
     runs-on: windows-latest
@@ -11,27 +11,24 @@ jobs:
         name: checkout
 
       - uses: ./.github/actions/setup-qt
-        id: setup-qt
+        name: setup-qt
 
       - uses: ./.github/actions/setup-mingw
-        id: setup-mingw
+        name: setup-mingw
 
       - uses: ./.github/actions/setup-mugideploy
-        id: setup-mugideploy
-      
-      - uses: ./.github/actions/setup-qwt
-        id: setup-qwt
+        name: setup-mugideploy
 
       - run: |
-          set PATH=${{ steps.setup-qt.outputs.bin-path }};${{ steps.setup-mingw.outputs.bin-path }};${{ steps.setup-qwt.outputs.bin-path }};%PATH%
-            pushd test-qwt
-            qmake
-            mingw32-make release
-          popd
-          ${{ steps.setup-mugideploy.outputs.mugideploy }} collect --app app --version 1.0.0 --bin test-qwt\release\test-qwt.exe
+          set PATH=%QT_BIN_PATH%;%MINGW_BIN_PATH%;%PATH%
+          echo %PATH%
+          qmake
+          mingw32-make release
+          %MUGIDEPLOY_PATH% collect --app app --version 1.0.0 --bin release\app.exe
           7z a app-1.0.0-win64.zip app-1.0.0-win64
-          
+          sha1sum 
         shell: cmd
+        name: build
 
       - uses: softprops/action-gh-release@v1
         with:
