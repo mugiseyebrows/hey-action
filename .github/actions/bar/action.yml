@@ -6,8 +6,8 @@ runs:
   using: composite
   steps:
   - run: |
-      for %i in (${{ inputs.modules }}) do (
-        echo %i
+      for %%i in (${{ inputs.modules }}) do (
+        echo %%i
         echo meow
       )
     shell: cmd
