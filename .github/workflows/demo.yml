@@ -1,5 +1,8 @@
 name: GitHub Actions Demo
-on: [push]
+on: 
+  push:
+    tags:
+      '*'
 jobs:
   main:
     runs-on: windows-latest
@@ -23,6 +26,7 @@ jobs:
           mingw32-make release
           %MUGIDEPLOY_PATH% collect --app app --version 1.0.0 --bin release\app.exe
           7z a app-1.0.0-win64.zip app-1.0.0-win64
+          sha1sum 
         shell: cmd
         name: build
 

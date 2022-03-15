@@ -1,0 +1,13 @@
+name: GitHub Actions Demo
+on: 
+- push
+jobs:
+  main:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+        name: checkout
+
+      - uses: ./.github/actions/bar
+        with:
+          modules: foo bar baz

@@ -1,0 +1,9 @@
+inputs:
+  modules:
+    description: modules
+
+runs:
+  using: composite
+  steps:
+  - run: echo modules are ${{ inputs.modules }}
+    shell: cmd
