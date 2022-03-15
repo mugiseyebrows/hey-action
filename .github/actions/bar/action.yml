@@ -5,5 +5,9 @@ inputs:
 runs:
   using: composite
   steps:
-  - run: echo modules are ${{ inputs.modules }}
+  - run: |
+      for %i in (${{ inputs.modules }}) do (
+        echo %i
+        echo meow
+      )
     shell: cmd
