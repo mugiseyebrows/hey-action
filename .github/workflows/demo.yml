@@ -16,6 +16,14 @@ jobs:
       - uses: ./.github/actions/setup-mugideploy
         id: setup-mugideploy
 
+      - run: echo %QT_BIN_PATH%
+        shell: cmd
+        name: test env variable
+
+      - run: type %GITHUB_ENV%
+        shell: cmd
+        name: test GITHUB_ENV
+
       - run: |
           set PATH=${{ steps.setup-qt.outputs.bin-path }};${{ steps.setup-mingw.outputs.bin-path }};%PATH%
           qmake

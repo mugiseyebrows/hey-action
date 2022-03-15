@@ -15,5 +15,6 @@ runs:
       7z x Qt-5.15.2-mingw64.zip
       echo ::set-output name=path::%CD%\Qt-5.15.2-mingw64
       echo ::set-output name=bin-path::%CD%\Qt-5.15.2-mingw64\bin
+      echo QT_BIN_PATH=%CD%\Qt-5.15.2-mingw64\bin >> %GITHUB_ENV%
     shell: cmd
     id: main
