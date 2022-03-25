@@ -11,8 +11,9 @@ jobs:
           set BASH=C:\msys64\usr\bin\bash
           %BASH% -lc "pacman --noconfirm -Syuu"
           %BASH% -lc "pacman --noconfirm -Syuu"
+          %BASH% -lc "pacman --noconfirm -S zip make"
           curl -L -o openssl-1.1.1n.tar.gz https://www.openssl.org/source/openssl-1.1.1n.tar.gz
-          %BASH% -lc "tar xvf openssl-1.1.1n.tar.gz"
+          %BASH% -lc "tar xf openssl-1.1.1n.tar.gz"
           pushd openssl-1.1.1n
             %BASH% -lc './config --prefix="%CD%/../OpenSSL" --openssldir=ssl'
             %BASH% -lc "make install"
