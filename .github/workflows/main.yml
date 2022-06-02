@@ -1,11 +1,9 @@
 name: GitHub Actions Demo
-on: 
-- push
+on: [push]
 jobs:
   main:
-    runs-on: windows-latest
+    runs-on: windows-2022
     steps:
-      - uses: actions/checkout@v2
-        name: checkout
-      - run: where git
+      - run: |
+          where git
         shell: cmd

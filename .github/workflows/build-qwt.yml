@@ -1,0 +1,20 @@
+name: Build Qwt
+on:
+  push:
+    tags:
+    - qwt
+jobs:
+  main:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+        name: checkout
+      - uses: ./.github/actions/setup-qt
+      - uses: ./.github/actions/setup-mingw
+      - run: build-qwt.bat
+        shell: cmd
+      - uses: softprops/action-gh-release@v1
+        with:
+          files: Qwt-6.2.0-mingw64.zip
+        if: startsWith(github.ref, 'refs/tags/')
+        name: release
