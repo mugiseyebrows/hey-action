@@ -7,4 +7,5 @@ jobs:
       - run: |
           where git
           where 7z
+          echo %CD%
         shell: cmd
