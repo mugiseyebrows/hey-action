@@ -7,10 +7,5 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         name: checkout
-
-      - uses: ./.github/actions/bar
-        with:
-          modules: |
-            foo
-            bar
-            baz
+      - run: where git
+        shell: cmd
