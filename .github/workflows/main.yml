@@ -8,4 +8,7 @@ jobs:
           where git
           where 7z
           echo %CD%
+          echo {{ github.ref }}
+        shell: cmd
+      - run: echo github.ref {{ github.ref }}
         shell: cmd
