@@ -37,8 +37,10 @@ jobs:
       id: cache-python
       uses: actions/cache@v3
       with:
-        path: C:\Miniconda\lib\site-packages
-        key: cache-python
+        path: |
+          C:\Miniconda\lib\site-packages
+          C:\Miniconda\Scripts
+        key: cache-python2
 
     - name: install python modules
       shell: cmd
