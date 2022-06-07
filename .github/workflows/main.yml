@@ -23,7 +23,7 @@ jobs:
       run: pip install aqtinstall
     - name: install qt
       shell: cmd
-      run: aqt install-qt windows desktop 6.2.0 win64_mingw81
+      run: aqt install-qt windows desktop 6.2.0 win64_mingw81 --archives qtbase
     - name: install mingw
       shell: cmd
       run: aqt install-tool windows desktop tools_mingw qt.tools.win64_mingw810
@@ -39,5 +39,5 @@ jobs:
         mingw32-make release
     - name: run app
       shell: cmd
-      run: release\test4.exe
+      run: release\test4.exe -v2
 
