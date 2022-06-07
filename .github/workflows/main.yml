@@ -19,13 +19,6 @@ jobs:
         echo where pip
         where pip
 
-    - name: cache mingw
-      id: cache-mingw
-      uses: actions/cache@v3
-      with:
-        path: D:\a\hey-action\hey-action\Tools\mingw810_64\bin
-        key: cache-mingw
-
     - name: cache python modules
       id: cache-python
       uses: actions/cache@v3
@@ -44,11 +37,9 @@ jobs:
       shell: cmd
       run: aqt install-qt windows desktop 6.2.0 win64_mingw81 --archives qtbase
       
-
     - name: install mingw
       shell: cmd
       run: aqt install-tool windows desktop tools_mingw qt.tools.win64_mingw810
-      if: steps.cache-mingw.outputs.cache-hit != 'true'
 
     - name: test env 2
       shell: cmd
