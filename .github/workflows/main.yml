@@ -39,5 +39,5 @@ jobs:
         mingw32-make release
     - name: run app
       shell: cmd
-      run: release/test4.exe
+      run: release\test4.exe
 
