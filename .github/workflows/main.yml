@@ -18,7 +18,7 @@ jobs:
         where python
         echo where pip
         where pip
-
+        
     - name: cache qt
       id: cache-qt
       uses: actions/cache@v3
@@ -40,11 +40,11 @@ jobs:
         path: |
           C:\Miniconda\lib\site-packages
           C:\Miniconda\Scripts
-        key: cache-python2
+        key: cache-python3
 
     - name: install python modules
       shell: cmd
-      run: pip install aqtinstall
+      run: pip install aqtinstall mugicli
       if: steps.cache-python.outputs.cache-hit != 'true'
 
     - name: install qt
@@ -60,8 +60,20 @@ jobs:
     - name: test env 2
       shell: cmd
       run: |
+        echo where qmake
         where qmake
+        echo where gcc
         where gcc
+        if exist %CD%\Tools (
+          echo Tools found
+        ) else (
+          echo Tools not found
+        )
+        if exist %CD%\6.2.0 (
+          echo 6.2.0 found
+        ) else (
+          echo 6.2.0 not found
+        )
     - name: build app
       shell: cmd
       run: |
