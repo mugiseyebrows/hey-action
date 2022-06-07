@@ -12,8 +12,11 @@ jobs:
     - name: test env 1
       shell: cmd
       run: |
+        echo where 7z
         where 7z
+        echo where python
         where python
+        echo where pip
         where pip
     - name: install python modules
       shell: cmd
