@@ -4,14 +4,37 @@ jobs:
   main:
     runs-on: windows-2022
     steps:
-      - run: |
-          where git
-          where 7z
-          echo %CD%
-        shell: cmd
-      - run: echo github.ref ${{ github.ref }}
-        shell: cmd
-        name: print ref
-      - run: echo ${{ github.event.release.tag_name }}
-        shell: cmd
-        name: print tag_name
+      - name: checkout app
+      uses: actions/checkout@v3
+    - name: prepare env
+      shell: cmd
+      run: echo PATH=%CD%\6.2.0\mingw81_64\bin;%CD%\Tools\mingw810_64\bin;C:\Miniconda;C:\Miniconda\Scripts;C:\Program Files\7-Zip;C:\ProgramData\Chocolatey\bin;C:\Program Files\Git\bin;C:\windows\system32;C:\windows>> %GITHUB_ENV%
+    - name: test env 1
+      shell: cmd
+      run: |
+        where 7z
+        where python
+        where pip
+    - name: install python modules
+      shell: cmd
+      run: pip install aqtinstall
+    - name: install qt
+      shell: cmd
+      run: aqt install-qt windows desktop 6.2.0 win64_mingw81
+    - name: install mingw
+      shell: cmd
+      run: aqt install-tool windows desktop tools_mingw qt.tools.win64_mingw810
+    - name: test env 2
+      shell: cmd
+      run: |
+        where qmake
+        where gcc
+    - name: build app
+      shell: cmd
+      run: |
+        qmake
+        mingw32-make release
+    - name: run app
+      shell: cmd
+      run: release/test4.exe
+

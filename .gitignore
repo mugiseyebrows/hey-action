@@ -1,0 +1,6 @@
+app-1.0.0-win64/
+Makefile*
+node_modules/
+release/
+*.zip
+.qmake.stash
