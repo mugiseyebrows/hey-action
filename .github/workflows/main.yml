@@ -13,7 +13,7 @@ jobs:
     - name: list c
       shell: cmd
       run: |
-        pyfind "C:\" -maxdepth 2 -output c.txt
+        pyfind "C:\\" -maxdepth 2 -output c.txt
         pyfind "C:\Program Files" -output c-program-files.txt
         pyfind "C:\mysql" -output c-mysql.txt
 
