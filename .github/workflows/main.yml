@@ -4,74 +4,15 @@ jobs:
   main:
     runs-on: windows-2022
     steps:
-    - name: checkout app
-      uses: actions/checkout@v3
-    - name: prepare env
+    - name: set env
       shell: cmd
-      run: echo PATH=%CD%\6.2.0\mingw81_64\bin;%CD%\Tools\mingw810_64\bin;C:\Miniconda;C:\Miniconda\Scripts;C:\Program Files\7-Zip;C:\ProgramData\Chocolatey\bin;C:\Program Files\Git\bin;C:\windows\system32;C:\windows>> %GITHUB_ENV%
-    - name: test env 1
+      run: echo PATH=C:\Miniconda;C:\Miniconda\Scripts;C:\Program Files\7-Zip;C:\Program Files\Git\bin;C:\windows\system32;C:\windows>> %GITHUB_ENV%
+    - name: install mugicli
       shell: cmd
-      run: |
-        echo where 7z
-        where 7z
-        echo where python
-        where python
-        echo where pip
-        where pip
-        
-    - name: cache qt
-      id: cache-qt
-      uses: actions/cache@v3
+      run: pip install mugicli
+    - name: list c
+      shell: cmd
+      run: pyfind C:\ -maxdepth 3 > c-listing.txt
+    - uses: actions/upload-artifact@v3
       with:
-        path: D:\a\hey-action\hey-action\6.2.0
-        key: cache-qt
-
-    - name: cache python modules
-      id: cache-python
-      uses: actions/cache@v3
-      with:
-        path: |
-          C:\Miniconda\lib\site-packages
-          C:\Miniconda\Scripts
-        key: cache-python3
-
-    - name: install python modules
-      shell: cmd
-      run: pip install aqtinstall mugicli
-      if: steps.cache-python.outputs.cache-hit != 'true'
-
-    - name: install qt
-      shell: cmd
-      run: aqt install-qt windows desktop 6.2.0 win64_mingw81 --archives qtbase
-      if: steps.cache-qt.outputs.cache-hit != 'true'
-
-    - name: install mingw
-      shell: cmd
-      run: aqt install-tool windows desktop tools_mingw qt.tools.win64_mingw810
-
-    - name: test env 2
-      shell: cmd
-      run: |
-        echo where qmake
-        where qmake
-        echo where gcc
-        where gcc
-        if exist %CD%\Tools (
-          echo Tools found
-        ) else (
-          echo Tools not found
-        )
-        if exist %CD%\6.2.0 (
-          echo 6.2.0 found
-        ) else (
-          echo 6.2.0 not found
-        )
-    - name: build app
-      shell: cmd
-      run: |
-        qmake
-        mingw32-make release
-    - name: run app
-      shell: cmd
-      run: release\test4.exe -v2
-
+        path: c-listing.txt
