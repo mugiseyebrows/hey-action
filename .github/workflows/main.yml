@@ -6,7 +6,7 @@ jobs:
     steps:
     - name: set env
       shell: cmd
-      run: echo PATH=C:\Miniconda;C:\Miniconda\Scripts;C:\Program Files\7-Zip;C:\Program Files\Git\bin;C:\windows\system32;C:\windows>> %GITHUB_ENV%
+      run: echo PATH=C:\Miniconda;C:\Miniconda\Scripts;C:\Program Files\7-Zip;C:\windows\system32;C:\windows>> %GITHUB_ENV%
     - name: install mugicli
       shell: cmd
       run: pip install mugicli==0.0.12
