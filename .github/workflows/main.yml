@@ -12,7 +12,7 @@ jobs:
       run: pip install mugicli==0.0.11
     - name: list c
       shell: cmd
-      run: pyfind C:\ -maxdepth 3 > c-listing.txt
+      run: pyfind C:\ -maxdepth 3 -output c-listing.txt
     - uses: actions/upload-artifact@v3
       with:
         path: c-listing.txt
