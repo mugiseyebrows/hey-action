@@ -12,7 +12,15 @@ jobs:
       run: pip install mugicli==0.0.12
     - name: list c
       shell: cmd
-      run: pyfind C:\ -maxdepth 3 -output c-listing.txt
+      run: |
+        pyfind "C:\" -maxdepth 2 -output c.txt
+        pyfind "C:\Program Files" -output c-program-files.txt
+        pyfind "C:\mysql" -output c-mysql.txt
+
     - uses: actions/upload-artifact@v3
       with:
-        path: c-listing.txt
+        name: listings
+        path: |
+          c.txt
+          c-program-files.txt
+          c-mysql.txt
