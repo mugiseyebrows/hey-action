@@ -4,29 +4,7 @@ jobs:
   main:
     runs-on: windows-2022
     steps:
-    - name: set env
-      shell: cmd
-      run: echo PATH=C:\Miniconda;C:\Miniconda\Scripts;C:\Program Files\7-Zip;C:\windows\system32;C:\windows>> %GITHUB_ENV%
-    - name: install mugicli
-      shell: cmd
-      run: pip install mugicli==0.0.12
-    - name: list selected paths
-      shell: cmd
-      run: |
-        pyfind "C:\\" -maxdepth 2 -output c.txt
-        pyfind "C:\Program Files" -output c-program-files.txt
-        pyfind "C:\Program Files (x86)" -output c-program-files-x86.txt
-        pyfind "C:\mysql" -output c-mysql.txt
-        pyfind "C:\\" -iname "*.exe" -output exes.txt
-        pyfind "C:\\" -iname "*.dll" -output dlls.txt
-
     - uses: actions/upload-artifact@v3
       with:
-        name: listings
-        path: |
-          c.txt
-          c-program-files.txt
-          c-program-files-x86.txt
-          c-mysql.txt
-          exes.txt
-          dlls.txt
+        name: mysql
+        path: C:\mysql
