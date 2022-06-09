@@ -8,3 +8,5 @@ jobs:
       shell: cmd
     - run: perl --version
       shell: cmd
+    - run: ninja --version
+      shell: cmd
