@@ -8,5 +8,7 @@ jobs:
       shell: cmd
     - run: perl --version
       shell: cmd
-    - run: ninja --version
+    - run: |
+        set PATH=%CD%/mysql-8.0.29-winx64/lib;%CD%/mysql-8.0.29-winx64/bin;%CD%\mingw64\bin;C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\Ninja;%PATH%
+        ninja --version
       shell: cmd
