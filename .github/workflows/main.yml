@@ -2,7 +2,7 @@ name: GitHub Actions Demo
 on: [push]
 jobs:
   main:
-    runs-on: windows-2022
+    runs-on: windows-2019
     steps:
     - name: set env
       shell: cmd
