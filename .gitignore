@@ -7,3 +7,9 @@ release/
 debug/
 *.pro.*
 __pycache__/
+5.15.2/
+package-lock.json
+package.json
+Tools/
+aqtinstall.log
+main.bat
