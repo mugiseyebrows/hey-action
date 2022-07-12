@@ -4,10 +4,6 @@
 
 void TestQString::toUpper()
 {
-  qDebug() << "hello from debug";
-
-  printf("hello from printf\n");
-
-  QString str = "Hello";
+    QString str = "hello";
   QVERIFY(str.toUpper() == "HELLO");
 }
