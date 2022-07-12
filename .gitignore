@@ -6,3 +6,4 @@ release/
 .qmake.stash
 debug/
 *.pro.*
+__pycache__/
