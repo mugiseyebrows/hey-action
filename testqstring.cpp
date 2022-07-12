@@ -1,11 +1,14 @@
 #include "testqstring.h"
 
 #include <QDebug>
+#include "debugapi.h"
 
 void TestQString::toUpper()
 {
     QString str = "hello";
   QVERIFY(str.toUpper() == "HELLO");
-  fflush(stdout);
-  fflush(stderr);
+
+
+  OutputDebugStringA("Hello world\n");
+
 }

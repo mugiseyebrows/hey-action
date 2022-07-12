@@ -8,24 +8,10 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - name: flavour qt5.15.2 msvc2019 x86_64
-      shell: cmd
-      run: |
-        set PATH=%CD%\5.15.2\msvc2019_64\bin;C:\Program Files\7-Zip;C:\Miniconda;C:\Miniconda\Scripts;%PATH%
-        where aqt || pip install aqtinstall
-        if not exist 5.15.2\msvc2019_64\bin\qmake.exe aqt install-qt windows desktop 5.15.2 win64_msvc2019_64
-        set INCLUDE=
-        call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
-        if exist release rmdir /q /s release
-        del /f .qmake.stash
-        del /f Makefile*
-        qmake
-        nmake
-        release\test4.exe
     - name: flavour qt5.15.2 mingw8.1.0 x86_64
       shell: cmd
       run: |
-        set PATH=%CD%\5.15.2\mingw81_64\bin;%CD%\Tools\mingw810_64\bin;C:\Program Files\7-Zip;C:\Miniconda;C:\Miniconda\Scripts;%PATH%
+        set PATH=%CD%\5.15.2\mingw81_64\bin;%CD%\Tools\mingw810_64\bin;C:\Program Files\7-Zip;C:\Miniconda\Scripts;C:\Miniconda;%PATH%
         where aqt || pip install aqtinstall
         if not exist 5.15.2\mingw81_64\bin\qmake.exe aqt install-qt windows desktop 5.15.2 win64_mingw81
         if not exist Tools\mingw810_64\bin\gcc.exe aqt install-tool windows desktop tools_mingw qt.tools.win64_mingw810
