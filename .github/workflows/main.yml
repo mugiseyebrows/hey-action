@@ -6,8 +6,10 @@ jobs:
   main:
     runs-on: windows-2019
     steps:
-    - run: |
-      set PATH=%PATH%;C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\Ninja
-      ninja --version
-      cmake --version
+    - name: main
       shell: cmd
+      run: |
+        set PATH=%PATH%;C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\Ninja
+        ninja --version
+        cmake --version
+      
