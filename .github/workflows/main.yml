@@ -21,7 +21,7 @@ jobs:
         cd llvm-project
         mkdir build
         cd build
-        cmake -DLLVM_ENABLE_PROJECTS="clang" -DCMAKE_BUILD_TYPE=Release -G Ninja ../llvm
+        cmake -DLLVM_ENABLE_PROJECTS="clang" -DCMAKE_BUILD_TYPE=Release -G Ninja -D CMAKE_C_COMPILER=cl -D CMAKE_CXX_COMPILER=cl ../llvm
         ninja clang-mute
     - uses: actions/upload-artifact@v3
       with:
