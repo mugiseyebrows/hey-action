@@ -14,10 +14,10 @@ jobs:
         cmake --version
         git --version
         git clone --depth 1 https://github.com/llvm/llvm-project.git
-        push llvm-project\clang\tools
+        pushd llvm-project\clang\tools
         git clone https://github.com/mugiseyebrows/clang-mute.git
         echo add_clang_subdirectory(clang-mute) >> CMakeLists.txt
-        pop
+        popd
         cd llvm-project
         mkdir build
         cd build
