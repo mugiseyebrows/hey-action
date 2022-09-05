@@ -4,7 +4,7 @@ on:
     tags: '*'
 jobs:
   main:
-    runs-on: windows-2019
+    runs-on: windows-2022
     steps:
     - name: main
       shell: cmd
@@ -12,4 +12,4 @@ jobs:
         set PATH=%PATH%;C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\Ninja
         ninja --version
         cmake --version
-      
+        git --version
