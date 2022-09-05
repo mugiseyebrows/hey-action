@@ -6,81 +6,11 @@ jobs:
   main:
     runs-on: windows-2022
     steps:
-    - name: prepare
+    - run: cmake --version
       shell: cmd
-      run: |
-        set MINGW_BIN_PATH=%CD%\mingw64\bin
-        echo PATH=C:\windows\system32;C:\windows;C:\Program Files\7-Zip;%MINGW_BIN_PATH%;%CD%\Qt-5.15.2\bin;%CD%\OpenSSL\bin;C:\Strawberry\perl\bin;%CD%\postgresql-14\bin;C:\mysql\lib;C:\Miniconda\python;C:\Miniconda\Scripts;C:\Users\Stanislav\Miniconda3\Scripts;C:\Users\Stanislav\Miniconda3;%PATH%>> %GITHUB_ENV%
-        python -m pip install mugicli mugideploy
-        rmdir /q /s Qt-5.15.2
-        curl -L -o x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z https://github.com/mugiseyebrows/mirror-mingw/releases/download/8.1.0/x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z
-        7z x -y x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z
-        curl -L -o OpenSSL.zip https://github.com/mugiseyebrows/build-openssl/releases/download/1.1.1n/OpenSSL.zip
-        7z x -y OpenSSL.zip
-        xcopy /s /q /y /i "C:\Program Files\PostgreSQL\14\bin" postgresql-14\bin
-        xcopy /s /q /y /i "C:\Program Files\PostgreSQL\14\include" postgresql-14\include
-    - name: build qtbase
+    - run: perl --version
       shell: cmd
-      run: |
-        curl -L -o qtbase-everywhere-src-5.15.2.zip https://download.qt.io/official_releases/qt/5.15/5.15.2/submodules/qtbase-everywhere-src-5.15.2.zip
-        7z x -y qtbase-everywhere-src-5.15.2.zip
-        pushd qtbase-everywhere-src-5.15.2
-        del /f config.cache
-        call configure -prefix %CD%\..\Qt-5.15.2 -opensource -confirm-license -shared -platform win32-g++ -opengl desktop -release -nomake tests -nomake examples -openssl-linked OPENSSL_LIBS="-lcrypto-1_1-x64 -lssl-1_1-x64" -I %CD%\..\OpenSSL\include -L %CD%\..\OpenSSL\bin
-        mingw32-make -j2
-        mingw32-make install
-        popd
-        pyfind Qt-5.15.2 -type f > qtbase.txt
-    - name: build qsqlmysql
+    - run: |
+        set PATH=%CD%/mysql-8.0.29-winx64/lib;%CD%/mysql-8.0.29-winx64/bin;%CD%\mingw64\bin;C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\Ninja;%PATH%
+        ninja --version
       shell: cmd
-      run: |
-        pushd qtbase-everywhere-src-5.15.2
-        del /f config.cache
-        call configure -prefix %CD%\..\Qt-5.15.2 -opensource -confirm-license -shared -platform win32-g++ -opengl desktop -release -nomake tests -nomake examples -openssl-linked OPENSSL_LIBS="-lcrypto-1_1-x64 -lssl-1_1-x64" -I %CD%\..\OpenSSL\include -L %CD%\..\OpenSSL\bin -plugin-sql-mysql MYSQL_PREFIX=C:\mysql MYSQL_INCDIR=C:\mysql\include MYSQL_LIBDIR=C:\mysql\lib
-        mingw32-make -j2
-        mingw32-make install
-        popd
-        pyfind Qt-5.15.2 -type f > qsqlmysql.txt
-    - name: build qsqlpsql
-      shell: cmd
-      run: |
-        pushd qtbase-everywhere-src-5.15.2
-        del /f config.cache
-        call configure -prefix %CD%\..\Qt-5.15.2 -opensource -confirm-license -shared -platform win32-g++ -opengl desktop -release -nomake tests -nomake examples -openssl-linked OPENSSL_LIBS="-lcrypto-1_1-x64 -lssl-1_1-x64" -I %CD%\..\OpenSSL\include -L %CD%\..\OpenSSL\bin -plugin-sql-psql PSQL_INCDIR=%CD%\..\postgresql-14\include PSQL_LIBDIR=%CD%\..\postgresql-14\bin
-        mingw32-make -j2
-        mingw32-make install
-        popd
-        pyfind Qt-5.15.2 -type f > qsqlpsql.txt
-    - name: zip
-      shell: cmd
-      run: |
-        pycat qtbase.txt qsqlmysql.txt | pysort | pyuniq -u > qsqlmysql-diff.txt
-        pycat qsqlmysql.txt qsqlpsql.txt | pysort | pyuniq -u > qsqlpsql-diff.txt
-        del /f Qt-5.15.2-qtbase.zip
-        del /f Qt-5.15.2-qsqlmysql.zip
-        del /f Qt-5.15.2-qsqlpsql.zip
-        pyzip a --list qtbase.txt Qt-5.15.2-qtbase.zip
-        pyzip a --list qsqlmysql-diff.txt Qt-5.15.2-qsqlmysql.zip
-        pyzip a --list qsqlpsql-diff.txt Qt-5.15.2-qsqlpsql.zip
-    - name: extra
-      shell: cmd
-      run: |
-        pyzip a -v --dir Qt-5.15.2\bin --base OpenSSL\bin Qt-5.15.2-qtbase.zip OpenSSL\bin\*.dll
-        mugideploy list --bin Qt-5.15.2\plugins\sqldrivers\qsqlmysql.dll | pygrep -v mingw64 | pygrep -v OpenSSL | pygrep -v Qt5Core | pygrep -v Qt5Sql | pygrep -v libssl | pygrep -v libcrypto | pygrep -v sqldrivers | pyxargs pyzip a -v --dir Qt-5.15.2\bin Qt-5.15.2-qsqlmysql.zip
-        mugideploy list --bin Qt-5.15.2\plugins\sqldrivers\qsqlpsql.dll | pygrep -v mingw64 | pygrep -v OpenSSL | pygrep -v Qt5Core | pygrep -v Qt5Sql | pygrep -v libssl | pygrep -v libcrypto | pygrep -v sqldrivers | pyxargs pyzip a -v --dir Qt-5.15.2\bin Qt-5.15.2-qsqlpsql.zip
-        echo qsqlmysql list
-        mugideploy list --bin Qt-5.15.2\plugins\sqldrivers\qsqlmysql.dll
-        echo qsqlmysql list filtered
-        mugideploy list --bin Qt-5.15.2\plugins\sqldrivers\qsqlmysql.dll | pygrep -v mingw64 | pygrep -v OpenSSL | pygrep -v Qt5Core | pygrep -v Qt5Sql | pygrep -v libssl | pygrep -v libcrypto | pygrep -v sqldrivers
-        echo qsqlpsql list
-        mugideploy list --bin Qt-5.15.2\plugins\sqldrivers\qsqlpsql.dll
-        echo qsqlpsql list filtered
-        mugideploy list --bin Qt-5.15.2\plugins\sqldrivers\qsqlpsql.dll | pygrep -v mingw64 | pygrep -v OpenSSL | pygrep -v Qt5Core | pygrep -v Qt5Sql | pygrep -v libssl | pygrep -v libcrypto | pygrep -v sqldrivers
-    - name: release
-      uses: softprops/action-gh-release@v1
-      if: startsWith(github.ref, 'refs/tags/')
-      with:
-        files: |
-          Qt-5.15.2-qtbase.zip
-          Qt-5.15.2-qsqlmysql.zip
-          Qt-5.15.2-qsqlpsql.zip
