@@ -1,13 +1,39 @@
 name: main
-on:
-  push:
-    tags: '*'
+on: push
 jobs:
   main:
-    runs-on: windows-2019
+    runs-on: windows-2022
     steps:
-    - run: |
-      set PATH=%PATH%;C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\Ninja
-      ninja --version
-      cmake --version
+    - name: main
       shell: cmd
+      run: |
+        set PATH=C:\Program Files\Git\mingw64\bin;C:\Program Files\CMake\bin;C:\Program Files\7-Zip;C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\Ninja;C:\Program Files\Git\usr\bin;C:\qt\Tools\mingw810_64\bin;%PATH%
+        if not exist C:\Qt\Tools\mingw810_64\bin\gcc.exe aqt install-tool --outputdir C:\Qt windows desktop tools_mingw qt.tools.win64_mingw810
+        where g++
+        where ninja
+        where cmake
+        where patch
+        rmdir /s /q "C:\antlr4-runtime"
+        if not exist antlr4 (
+        git clone https://github.com/antlr/antlr4.git
+        pushd antlr4
+        git checkout master
+        popd
+        )
+        pushd antlr4
+        popd
+        pushd antlr4\runtime\Cpp
+        rmdir /s /q "build"
+        if not exist "build" mkdir "build"
+        pushd build
+        cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_STANDARD=17 -DANTLR4_INSTALL=ON -DANTLR_BUILD_CPP_TESTS=OFF ..
+        cmake --build .
+        cmake --install . --prefix=C:/antlr4-runtime
+        popd
+        popd
+        if not exist antlr4-runtime.zip 7z a -y antlr4-runtime.zip C:\antlr4-runtime
+    - name: upload
+      uses: actions/upload-artifact@v3
+      with:
+        name: antlr4-runtime
+        path: antlr4-runtime.zip
