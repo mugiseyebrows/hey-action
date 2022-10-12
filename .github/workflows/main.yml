@@ -4,6 +4,8 @@ jobs:
   main:
     runs-on: windows-2022
     steps:
+    - uses: actions/checkout@v3
+      name: checkout
     - name: main
       shell: cmd
       run: |
@@ -22,6 +24,7 @@ jobs:
         popd
         )
         pushd antlr4
+        patch -p1 < ../0001-fix-hash-function-must-be-invocable-for-gcc-below-84.patch
         popd
         pushd antlr4\runtime\Cpp
         rmdir /s /q "build"
