@@ -20,7 +20,7 @@ jobs:
         if not exist antlr4 (
         git clone https://github.com/antlr/antlr4.git
         pushd antlr4
-        git checkout master
+        git checkout 4.11.1
         popd
         )
         pushd antlr4
@@ -35,15 +35,10 @@ jobs:
         cmake --install . --prefix=C:/antlr4-runtime
         popd
         popd
-        if not exist antlr4-runtime.zip 7z a -y antlr4-runtime.zip C:\antlr4-runtime
-    - name: upload
-      uses: actions/upload-artifact@v3
-      with:
-        name: antlr4-runtime
-        path: C:/antlr4-runtime
+        7z a -y antlr4.11.1-runtime-mingw8.1.0-x86_64.zip C:\antlr4-runtime
     - name: release
       uses: ncipollo/release-action@v1
       if: startsWith(github.ref, 'refs/tags/')
       with:
-        artifacts: antlr4-runtime.zip
+        artifacts: antlr4.11.1-runtime-mingw8.1.0-x86_64.zip
         token: ${{ secrets.GITHUB_TOKEN }}
