@@ -7,7 +7,8 @@ jobs:
     - name: main
       shell: cmd
       run: |
-        set PATH=C:\Program Files\Git\mingw64\bin;C:\Program Files\CMake\bin;C:\Program Files\7-Zip;C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\Ninja;C:\Program Files\Git\usr\bin;C:\qt\Tools\mingw810_64\bin;%PATH%
+        set PATH=C:\Program Files\Git\mingw64\bin;C:\Program Files\CMake\bin;C:\Program Files\7-Zip;C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\Ninja;C:\Miniconda;C:\Program Files\Git\usr\bin;C:\qt\Tools\mingw810_64\bin;%PATH%
+        where aqt || pip install aqtinstall
         if not exist C:\Qt\Tools\mingw810_64\bin\gcc.exe aqt install-tool --outputdir C:\Qt windows desktop tools_mingw qt.tools.win64_mingw810
         where g++
         where ninja
