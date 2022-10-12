@@ -9,13 +9,21 @@ jobs:
     - name: main
       shell: cmd
       run: |
-        set PATH=C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Program Files\7-Zip;C:\Program Files\CMake\bin;C:\Miniconda;C:\qt\Tools\mingw810_64\bin;%PATH%
+        set PATH=C:\qt\Tools\mingw810_64\bin;C:\Program Files\CMake\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\7-Zip;C:\Miniconda\Scripts;C:\Program Files\Git\usr\bin;C:\Miniconda;%PATH%
         where aqt || pip install aqtinstall
         if not exist C:\Qt\Tools\mingw810_64\bin\gcc.exe aqt install-tool --outputdir C:\Qt windows desktop tools_mingw qt.tools.win64_mingw810
-        where g++
+        echo where gcc
+        where gcc
+        echo where ninja
         where ninja
+        echo where cmake
         where cmake
+        echo where patch
         where patch
+        echo where 7z
+        where 7z
+        echo where aqt
+        where aqt
         rmdir /s /q "C:\antlr4-runtime"
         if not exist antlr4 (
         git clone https://github.com/antlr/antlr4.git
