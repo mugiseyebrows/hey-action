@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for package in `apt list | awk -F '/' '{print $1}' | sort --random-sort | head -n 10`; do 
+for package in `apt list | awk -F '/' '{print $1}' | sort --random-sort | head -n 50`; do 
 echo "downloading $package"
 outp=`yes | apt source $package 2>&1`
 git_url=`echo $outp | grep -o "http[:/.a-z0-9_-]\+\\.git" | head -1`
