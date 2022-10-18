@@ -2,51 +2,34 @@ name: main
 on: push
 jobs:
   main:
-    runs-on: windows-2022
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
       name: checkout
-    - name: main
-      shell: cmd
-      run: |
-        set PATH=C:\qt\Tools\mingw810_64\bin;C:\Program Files\CMake\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\7-Zip;C:\Miniconda\Scripts;C:\Program Files\Git\usr\bin;C:\Miniconda;%PATH%
-        where aqt || pip install aqtinstall
-        if not exist C:\Qt\Tools\mingw810_64\bin\gcc.exe aqt install-tool --outputdir C:\Qt windows desktop tools_mingw qt.tools.win64_mingw810
-        echo where gcc
-        where gcc
-        echo where ninja
-        where ninja
-        echo where cmake
-        where cmake
-        echo where patch
-        where patch
-        echo where 7z
-        where 7z
-        echo where aqt
-        where aqt
-        rmdir /s /q "C:\antlr4-runtime"
-        if not exist antlr4 (
-        git clone https://github.com/antlr/antlr4.git
-        pushd antlr4
-        git checkout 4.11.1
-        popd
-        )
-        pushd antlr4
-        patch -p1 < ../0001-fix-hash-function-must-be-invocable-for-gcc-below-84.patch
-        popd
-        pushd antlr4\runtime\Cpp
-        rmdir /s /q "build"
-        if not exist "build" mkdir "build"
-        pushd build
-        cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_STANDARD=17 -DANTLR4_INSTALL=ON -DANTLR_BUILD_CPP_TESTS=OFF ..
-        cmake --build .
-        cmake --install . --prefix=C:/antlr4-runtime
-        popd
-        popd
-        7z a -y antlr4.11.1-runtime-mingw8.1.0-x86_64.zip C:\antlr4-runtime
+
+    - run: |
+        sed -i "s,# deb-src,deb-src," /etc/apt/sources.list
+        apt update
+        apt install zip
+        mkdir samples
+        mkdir tmp
+        cd tmp
+        bash ../find-samples.sh
+        cd ..
+        zip -r samples.zip samples
+    
+    - uses: actions/upload-artifact@v3
+      with:
+        name: samples
+        path: |
+          samples
+          samples.txt
+
     - name: release
       uses: ncipollo/release-action@v1
       if: startsWith(github.ref, 'refs/tags/')
       with:
-        artifacts: antlr4.11.1-runtime-mingw8.1.0-x86_64.zip
+        artifacts: |
+          samples.zip
+          samples.txt
         token: ${{ secrets.GITHUB_TOKEN }}
