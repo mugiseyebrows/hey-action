@@ -1,24 +1,18 @@
 #!/bin/bash
 
-for package in `apt list | awk -F '/' '{print $1}' | sort --random-sort | head -n 50`; do 
+for package in `apt list | awk -F '/' '{print $1}' | sort --random-sort | head -n 40`; do 
 echo "downloading $package"
-outp=`yes | apt source $package 2>&1`
+outp=`apt source $package 2>&1`
 git_url=`echo $outp | grep -o "http[:/.a-z0-9_-]\+\\.git" | head -1`
 actual_package=`echo $outp | grep -o "Picking \\(.*\\) as source package" | cut -d"'" -f2`
 echo "actual_package is $actual_package"
 echo "git_url is $git_url"
-#echo outp is $outp
 
 echo $package >> ../samples.txt
 echo $actual_package >> ../samples.txt
 echo $git_url >> ../samples.txt
 
-echo "collecting extstat"
-
-#echo $package >> ../extstat.txt
-#pyextstat -o count . | head -n 10 >> ../extstat.txt
-
-echo "delete files"
+echo "deleting files"
 
 find -type f -iname "*.*" -and -not -iname "*.sh" -delete
 

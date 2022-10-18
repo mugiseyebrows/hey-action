@@ -25,7 +25,7 @@ jobs:
       with:
         name: samples
         path: |
-          samples
+          samples.zip
           samples.txt
 
     - name: release
