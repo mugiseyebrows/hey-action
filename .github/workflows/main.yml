@@ -6,4 +6,6 @@ jobs:
     steps:
     - name: main
       shell: pwsh
-      run: install-module pscx
+      run: |
+        Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted
+        install-module pscx -scope CurrentUser -AllowClobber
