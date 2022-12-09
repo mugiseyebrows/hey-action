@@ -1,0 +1,5 @@
+
+def main:
+    use_tool(python)
+    python -m pip install mugicli
+

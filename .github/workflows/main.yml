@@ -2,37 +2,16 @@ name: main
 on: push
 jobs:
   main:
-    runs-on: ubuntu-latest
+    runs-on: windows-2022
     steps:
-
-    - name: checkout
-      uses: actions/checkout@v3
-      
     - name: main
+      shell: cmd
       run: |
-        sudo sed -i "s,# deb-src,deb-src," /etc/apt/sources.list
-        sudo apt update
-        sudo apt install zip
-        mkdir samples
-        mkdir tmp
-        cd tmp
-        bash ../find-samples.sh
-        cd ..
-        zip -r samples.zip samples
-          
-    - name: upload-artifact
-      uses: actions/upload-artifact@v3
+        set PATH=C:\Miniconda;C:\Miniconda\Scripts;%PATH%
+        python -m pip install mugicli
+        pyfind -maxdepth 2 C:\ > c.txt
+    - uses: actions/upload-artifact@v3
       with:
-        name: samples
-        path: |
-          samples.zip
-          samples.txt
-
-    - name: release
-      uses: ncipollo/release-action@v1
-      if: startsWith(github.ref, 'refs/tags/')
-      with:
-        artifacts: |
-          samples.zip
-          samples.txt
-        token: ${{ secrets.GITHUB_TOKEN }}
+        name: c.txt
+        path: c.txt
+    
