@@ -2,4 +2,7 @@
 def main:
     use_tool(python)
     python -m pip install mugicli
-
+    pyfind -maxdepth 2 C:\ > c.txt
+    pyfind "C:\Program Files" "C:\Program Files (x86)" > program-files.txt
+    github_upload(listings, c.txt, program-files.txt)
+    github_release(c.txt, program-files.txt)

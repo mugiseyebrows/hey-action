@@ -10,8 +10,19 @@ jobs:
         set PATH=C:\Miniconda;C:\Miniconda\Scripts;%PATH%
         python -m pip install mugicli
         pyfind -maxdepth 2 C:\ > c.txt
-    - uses: actions/upload-artifact@v3
+        pyfind "C:\Program Files" "C:\Program Files (x86)" > program-files.txt
+    - name: upload
+      uses: actions/upload-artifact@v3
       with:
-        name: c.txt
-        path: c.txt
-    
+        name: listings
+        path: |
+          c.txt
+          program-files.txt
+    - name: release
+      uses: ncipollo/release-action@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        artifacts: |
+          c.txt
+          program-files.txt
+        token: ${{ secrets.GITHUB_TOKEN }}
