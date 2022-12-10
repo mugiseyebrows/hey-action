@@ -6,3 +6,5 @@ def main:
     pyfind "C:\Program Files" "C:\Program Files (x86)" > program-files.txt
     github_upload(listings, c.txt, program-files.txt)
     github_release(c.txt, program-files.txt)
+
+github-image windows-2019
