@@ -8,17 +8,36 @@ jobs:
         include:
         - { msystem: MINGW32, arch: i686}
     steps:
+    - uses: actions/checkout@v3
     - uses: msys2/setup-msys2@v2
       with:
         msystem: ${{ matrix.msystem }}
         update: false
-        install: git mingw-w64-${{ matrix.arch }}-gcc
+        install: git mingw-w64-${{ matrix.arch }}-gcc base-devel zip make
     - name: test shell
       shell: msys2 {0}
       env:
         MSYSTEM: MINGW32
       run: |
-        pwd
         gcc -v
-        which gcc
-        uname -a
+        perl -v
+        curl -L -o openssl-0.9.8zf.tar.gz https://www.openssl.org/source/old/0.9.x/openssl-0.9.8zf.tar.gz
+        tar xf openssl-0.9.8zf.tar.gz
+        cd openssl-0.9.8zf
+        ./config --prefix="`pwd`/../OpenSSL" --openssldir=ssl
+        sed -i 's,-mno-cygwin,,' Makefile
+        sed -i 's,i486,i686,' Makefile
+        sed -i 's,0x333,0x400,' Makefile
+        patch -N -p1 -i ../0001-remove-include-windows.h.patch
+        make
+        cd ..
+    - name: zip
+      shell: cmd
+      run: 7z a OpenSSL.zip OpenSSL
+    - name: upload
+      uses: actions/upload-artifact@v3
+      with:
+        name: OpenSSL
+        path: OpenSSL.zip
+
+

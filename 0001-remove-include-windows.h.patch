@@ -1,0 +1,27 @@
+From f2f7be2233add3e3416fd6c4deb6794ce1757658 Mon Sep 17 00:00:00 2001
+From: Doronin Stanislav <mugisbrows@gmail.com>
+Date: Thu, 12 Jan 2023 15:04:28 +0300
+Subject: [PATCH] remove include windows.h
+
+---
+ include/openssl/rand.h | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/include/openssl/rand.h b/include/openssl/rand.h
+index ed1f276..bd3e265 100644
+--- a/include/openssl/rand.h
++++ b/include/openssl/rand.h
+@@ -63,10 +63,6 @@
+ # include <openssl/ossl_typ.h>
+ # include <openssl/e_os2.h>
+ 
+-# if defined(OPENSSL_SYS_WINDOWS)
+-#  include <windows.h>
+-# endif
+-
+ #ifdef  __cplusplus
+ extern "C" {
+ #endif
+-- 
+2.32.0.windows.2
+
