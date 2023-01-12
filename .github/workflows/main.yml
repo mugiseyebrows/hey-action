@@ -5,5 +5,7 @@ jobs:
     runs-on: windows-2019
     steps:
     - name: main
+      env:
+        foo: bar
       shell: C:\msys64\usr\bin\bash.exe {0}
-      run: echo hello
+      run: echo $foo
