@@ -1,16 +1,16 @@
-From f2f7be2233add3e3416fd6c4deb6794ce1757658 Mon Sep 17 00:00:00 2001
+From 857f6119c3ee6b5de85e1c51eb5a5297ecacae65 Mon Sep 17 00:00:00 2001
 From: Doronin Stanislav <mugisbrows@gmail.com>
-Date: Thu, 12 Jan 2023 15:04:28 +0300
+Date: Thu, 12 Jan 2023 15:36:10 +0300
 Subject: [PATCH] remove include windows.h
 
 ---
- include/openssl/rand.h | 4 ----
+ crypto/rand/rand.h | 4 ----
  1 file changed, 4 deletions(-)
 
-diff --git a/include/openssl/rand.h b/include/openssl/rand.h
+diff --git a/crypto/rand/rand.h b/crypto/rand/rand.h
 index ed1f276..bd3e265 100644
---- a/include/openssl/rand.h
-+++ b/include/openssl/rand.h
+--- a/crypto/rand/rand.h
++++ b/crypto/rand/rand.h
 @@ -63,10 +63,6 @@
  # include <openssl/ossl_typ.h>
  # include <openssl/e_os2.h>
