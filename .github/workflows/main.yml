@@ -3,7 +3,7 @@ on: push
 jobs:
   main:
     env:
-      CHERE_INVOKING: yes
+      CHERE_INVOKING: "yes"
       MSYSTEM: MINGW32
     runs-on: windows-2019
     strategy:
@@ -17,4 +17,7 @@ jobs:
         pwd
         pacman -S --needed --noconfirm base-devel mingw-w64-${{ matrix.arch }}-gcc zip make
         gcc -v
+        echo $CHERE_INVOKING
+        echo $MSYSTEM
+
         
