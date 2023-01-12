@@ -12,7 +12,7 @@ jobs:
       with:
         msystem: ${{ matrix.msystem }}
         update: false
-        install: git mingw-w64-ucrt-${{ matrix.arch }}-gcc
+        install: git mingw-w64-${{ matrix.arch }}-gcc
     - name: test shell
       shell: msys2 {0}
       env:
