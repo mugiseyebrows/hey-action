@@ -13,7 +13,7 @@ jobs:
       with:
         msystem: ${{ matrix.msystem }}
         update: false
-        install: git mingw-w64-${{ matrix.arch }}-gcc base-devel zip make
+        install: git mingw-w64-${{ matrix.arch }}-gcc base-devel make
     - name: test shell
       shell: msys2 {0}
       env:
@@ -28,6 +28,7 @@ jobs:
         sed -i 's,-mno-cygwin,,' Makefile
         sed -i 's,i486,i686,' Makefile
         sed -i 's,0x333,0x400,' Makefile
+        ls -la include/openssl/rand.h
         patch -N -p1 -i ../0001-remove-include-windows.h.patch
         make
         cd ..
