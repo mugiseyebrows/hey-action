@@ -2,22 +2,23 @@ name: main
 on: push
 jobs:
   main:
-    env:
-      CHERE_INVOKING: "yes"
-      MSYSTEM: MINGW32
     runs-on: windows-2019
     strategy:
       matrix:
         include:
         - { msystem: MINGW32, arch: i686}
     steps:
-    - name: main
-      shell: C:\msys64\usr\bin\bash.exe {0}
+    - uses: msys2/setup-msys2@v2
+      with:
+        msystem: ${{ matrix.msystem }}
+        update: false
+        install: git mingw-w64-ucrt-${{ matrix.arch }}-gcc
+    - name: test shell
+      shell: msys2 {0}
+      env:
+        MSYSTEM: MINGW32
       run: |
         pwd
-        pacman -S --needed --noconfirm base-devel mingw-w64-${{ matrix.arch }}-gcc zip make
         gcc -v
-        echo $CHERE_INVOKING
-        echo $MSYSTEM
-
-        
+        which gcc
+        uname -a
