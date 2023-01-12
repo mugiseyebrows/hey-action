@@ -2,10 +2,19 @@ name: main
 on: push
 jobs:
   main:
+    env:
+      CHERE_INVOKING: yes
+      MSYSTEM: MINGW32
     runs-on: windows-2019
+    strategy:
+      matrix:
+        include:
+        - { msystem: MINGW32, arch: i686}
     steps:
     - name: main
-      env:
-        foo: bar
       shell: C:\msys64\usr\bin\bash.exe {0}
-      run: echo $foo
+      run: |
+        pwd
+        pacman -S --needed --noconfirm base-devel mingw-w64-${{ matrix.arch }}-gcc zip make
+        gcc -v
+        
