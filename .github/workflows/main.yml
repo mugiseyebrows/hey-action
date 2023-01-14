@@ -9,4 +9,6 @@ jobs:
     steps:
     - name: test
       shell: python {0}
-      run: print(os.listdir("."))
+      run: |
+        import os
+        print(os.listdir("."))
