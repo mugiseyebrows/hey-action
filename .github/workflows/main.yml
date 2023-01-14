@@ -1,44 +1,20 @@
 name: main
 on: push
+env:
+  MSYSTEM: MINGW32
+  CHERE_INVOKING: 'yes'
 jobs:
   main:
-    runs-on: windows-2019
-    strategy:
-      matrix:
-        include:
-        - { msystem: MINGW32, arch: i686}
+    runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v3
-    - uses: msys2/setup-msys2@v2
-      with:
-        msystem: ${{ matrix.msystem }}
-        update: true
-        install: git mingw-w64-${{ matrix.arch }}-gcc base-devel make
-    - name: build
-      shell: msys2 {0}
-      env:
-        MSYSTEM: MINGW32
-      run: |
-        gcc -v
-        perl -v
-        curl -L -o openssl-0.9.8zf.tar.gz https://www.openssl.org/source/old/0.9.x/openssl-0.9.8zf.tar.gz
-        tar xf openssl-0.9.8zf.tar.gz
-        cd openssl-0.9.8zf
-        ./config --prefix="`pwd`/../OpenSSL" --openssldir=ssl
-        sed -i 's,-mno-cygwin,,' Makefile
-        sed -i 's,i486,i686,' Makefile
-        sed -i 's,0x333,0x400,' Makefile
-        patch -N -p1 -i ../0001-remove-include-windows.h.patch
-        patch -N -p1 -i ../0001-fix-perl-include.patch
-        make
-        cd ..
-    - name: zip
+    - name: main
       shell: cmd
-      run: 7z a OpenSSL.zip OpenSSL
-    - name: upload
-      uses: actions/upload-artifact@v3
-      with:
-        name: OpenSSL
-        path: OpenSSL.zip
-
-
+      run: echo this is main
+    - name: second
+      shell: msys2 {0}
+      run: |
+        echo this is second
+        echo $MSYSTEM $CHERE_INVOKING
+    - name: third
+      shell: cmd
+      run: echo hello from third
