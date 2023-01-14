@@ -7,18 +7,12 @@ jobs:
   main:
     runs-on: windows-latest
     steps:
-    - name: setup-msys2
-      uses: msys2/setup-msys2@v2
-      with:
-        msystem: MINGW32
     - name: main
       shell: cmd
       run: echo this is main
     - name: second
-      shell: msys2 {0}
+      shell: C:\msys64\usr\bin\bash.exe {0}
       run: |
         echo this is second
-        echo $MSYSTEM $CHERE_INVOKING
-    - name: third
-      shell: cmd
-      run: echo hello from third
+        echo CHERE_INVOKING=$CHERE_INVOKING MSYSTEM=$MSYSTEM
+        pwd
