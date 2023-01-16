@@ -12,6 +12,8 @@ jobs:
       run: |
         set test=hello
         echo test=hello>> %GITHUB_ENV%
+        echo %PATH%
+        type %GITHUB_ENV%
         echo %test% from cmd
     - name: foo
       shell: python
