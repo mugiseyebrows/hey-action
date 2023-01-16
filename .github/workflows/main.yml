@@ -15,6 +15,7 @@ jobs:
         echo %PATH%
         type %GITHUB_ENV%
         echo %test% from cmd
+        where node
     - name: foo
       shell: python
       run: |
