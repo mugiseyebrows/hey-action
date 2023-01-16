@@ -28,5 +28,5 @@ jobs:
       shell: C:\msys64\usr\bin\bash.exe {0}
       run: echo $test from msys2
     - name: qux
-      shell: node
+      shell: node {0}
       run: console.log(`${process.env.test} from node`)
