@@ -4,6 +4,9 @@ jobs:
   main:
     runs-on: windows-latest
     steps:
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '16'
     - name: main
       shell: cmd
       run: |
