@@ -1,14 +1,26 @@
 name: main
 on: push
-env:
-  MSYSTEM: MINGW32
-  CHERE_INVOKING: 'yes'
 jobs:
   main:
     runs-on: windows-latest
     steps:
-    - name: test
-      shell: python {0}
+    - name: main
+      shell: cmd
+      run: |
+        set test=hello
+        echo test=hello>> %GITHUB_ENV%
+        echo %test% from cmd
+    - name: foo
+      shell: python
       run: |
         import os
-        print(os.listdir("."))
+        print("{} from python".format(os.environ['test']))
+    - name: bar
+      shell: pwsh
+      run: Write-Output "$env:test from powershell"
+    - name: baz
+      shell: C:\msys64\usr\bin\bash.exe {0}
+      run: echo $test from msys2
+    - name: qux
+      shell: node
+      run: console.log(`${process.env.test} from node`)
