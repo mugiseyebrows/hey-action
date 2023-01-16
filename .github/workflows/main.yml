@@ -4,9 +4,6 @@ jobs:
   main:
     runs-on: windows-latest
     steps:
-    - uses: actions/setup-node@v3
-      with:
-        node-version: '16'
     - name: main
       shell: cmd
       run: |
@@ -28,5 +25,5 @@ jobs:
       shell: C:\msys64\usr\bin\bash.exe {0}
       run: echo $test from msys2
     - name: qux
-      shell: node {0}
+      shell: C:\Program Files\nodejs\node.exe {0}
       run: console.log(`${process.env.test} from node`)
