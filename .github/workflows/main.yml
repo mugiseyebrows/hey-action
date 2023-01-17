@@ -7,15 +7,20 @@ jobs:
       matrix:
         foo:
         - qwe
-        - rty
-        bar:
-        - uio
-        - jkl
-        include:
-        - foo: asd
-          bar: fgh
       fail-fast: false
     steps:
     - name: main
       shell: cmd
-      run: echo ${{ matrix.foo }} ${{ matrix.bar }}
+      run: echo ${{ matrix.foo }}
+    - name: Dump GitHub context
+      run: echo '${{ toJSON(github) }}'
+    - name: Dump job context
+      run: echo '${{ toJSON(job) }}'
+    - name: Dump steps context
+      run: echo '${{ toJSON(steps) }}'
+    - name: Dump runner context
+      run: echo '${{ toJSON(runner) }}'
+    - name: Dump strategy context
+      run: echo '${{ toJSON(strategy) }}'
+    - name: Dump matrix context
+      run: echo '${{ toJSON(matrix) }}'
