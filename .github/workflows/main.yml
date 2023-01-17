@@ -3,27 +3,19 @@ on: push
 jobs:
   main:
     runs-on: windows-latest
+    strategy:
+      matrix:
+        foo:
+        - qwe
+        - rty
+        bar:
+        - uio
+        - jkl
+        include:
+        - foo: asd
+          bar: fgh
+      fail-fast: false
     steps:
     - name: main
       shell: cmd
-      run: |
-        set test=hello
-        echo test=hello>> %GITHUB_ENV%
-        echo %PATH%
-        type %GITHUB_ENV%
-        echo %test% from cmd
-        where node
-    - name: foo
-      shell: python
-      run: |
-        import os
-        print("{} from python".format(os.environ['test']))
-    - name: bar
-      shell: pwsh
-      run: Write-Output "$env:test from powershell"
-    - name: baz
-      shell: C:\msys64\usr\bin\bash.exe {0}
-      run: echo $test from msys2
-    - name: qux
-      shell: node {0}
-      run: console.log(`${process.env.test} from node`)
+      run: echo ${{ matrix.foo }} ${{ matrix.bar }}
